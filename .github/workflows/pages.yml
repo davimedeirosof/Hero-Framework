@@ -67,16 +67,11 @@ jobs:
           echo "SKILLS=$SKILLS" >> $GITHUB_ENV
           echo "HOOKS=$HOOKS" >> $GITHUB_ENV
 
-      - name: Increment version
+      - name: Read version
         run: |
-          CURRENT=$(cat VERSION | tr -d '[:space:]')
-          MAJOR=$(echo $CURRENT | cut -d. -f1)
-          MINOR=$(echo $CURRENT | cut -d. -f2)
-          NEW_MINOR=$((MINOR + 1))
-          NEW_VERSION="$MAJOR.$NEW_MINOR"
-          echo $NEW_VERSION > VERSION
+          NEW_VERSION=$(cat VERSION | tr -d '[:space:]')
           echo "NEW_VERSION=$NEW_VERSION" >> $GITHUB_ENV
-          echo "Versao: $CURRENT -> $NEW_VERSION"
+          echo "Versao atual: $NEW_VERSION"
 
       - name: Update README
         run: |
