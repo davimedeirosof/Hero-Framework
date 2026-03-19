@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
@@ -23,12 +23,13 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Generate stats.json
         run: |
           COMMANDS_REPO=$(find commands -name "*.md" 2>/dev/null | wc -l | tr -d ' ')
           # 5 comandos svelte ainda faltando no repo (restricao Windows, caracter :)
-          # 16 dos 21 originais ja foram subidos para o GitHub com sucesso
           COMMANDS=$((COMMANDS_REPO + 5))
           AGENTS_REPO=$(find agents -name "*.md" 2>/dev/null | grep -v README | wc -l | tr -d ' ')
           SKILLS=$(find skills -mindepth 1 -maxdepth 1 -type d 2>/dev/null | wc -l | tr -d ' ')
@@ -59,6 +60,44 @@ jobs:
 
           echo "Stats gerados:"
           cat docs/stats.json
+
+          # Exportar variaveis para proximos steps
+          echo "COMMANDS=$COMMANDS" >> $GITHUB_ENV
+          echo "AGENTS_TOTAL=$AGENTS_TOTAL" >> $GITHUB_ENV
+          echo "SKILLS=$SKILLS" >> $GITHUB_ENV
+          echo "HOOKS=$HOOKS" >> $GITHUB_ENV
+
+      - name: Increment version
+        run: |
+          CURRENT=$(cat VERSION | tr -d '[:space:]')
+          MAJOR=$(echo $CURRENT | cut -d. -f1)
+          MINOR=$(echo $CURRENT | cut -d. -f2)
+          NEW_MINOR=$((MINOR + 1))
+          NEW_VERSION="$MAJOR.$NEW_MINOR"
+          echo $NEW_VERSION > VERSION
+          echo "NEW_VERSION=$NEW_VERSION" >> $GITHUB_ENV
+          echo "Versao: $CURRENT -> $NEW_VERSION"
+
+      - name: Update README
+        run: |
+          # Atualizar versao no titulo
+          sed -i "s/# Hero-Skills-Framework v[0-9]*\.[0-9]*/# Hero-Skills-Framework v$NEW_VERSION/" README.md
+          # Atualizar numeros na linha de descricao
+          sed -i "s/[0-9]* commands, [0-9]* agents, [0-9]* skills, [0-9]* hooks/$COMMANDS commands, $AGENTS_TOTAL agents, $SKILLS skills, $HOOKS hooks/" README.md
+          echo "README atualizado para v$NEW_VERSION"
+
+      - name: Update dashboard version badge
+        run: |
+          sed -i "s/Disponivel Agora Versao [0-9]*\.[0-9]*/Disponivel Agora Versao $NEW_VERSION/" docs/index.html
+          echo "Dashboard atualizado para v$NEW_VERSION"
+
+      - name: Commit updates
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add VERSION README.md docs/stats.json docs/index.html
+          git diff --staged --quiet || git commit -m "chore: v$NEW_VERSION - atualiza stats e versao [skip ci]"
+          git push
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
