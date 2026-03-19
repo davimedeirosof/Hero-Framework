@@ -1,12 +1,12 @@
-# DaviClaude
+# Hero-Skills-Framework
 
 Setup completo e otimizado do Claude Code do Davi Medeiros. 937 commands, 344 agents, 211 skills, 28 hooks, 14 marketplaces, Opensquad multi-agent orchestration, GSD meta-prompting, e muito mais.
 
 ## Quick Install
 
 ```bash
-git clone https://github.com/davimedeirosof/DaviClaude.git
-cd DaviClaude
+git clone https://github.com/davimedeirosof/Hero-Skills-Framework.git
+cd Hero-Skills-Framework
 ./install.sh
 ```
 
