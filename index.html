@@ -1,0 +1,1196 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hero — Skills & Framework</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #07090f;
+      --bg-2:      #0c0f1a;
+      --bg-3:      #111627;
+      --border:    #1a2236;
+      --border-2:  #243044;
+      --blue:      #3b82f6;
+      --blue-dim:  #1d4ed8;
+      --cyan:      #06b6d4;
+      --cyan-dim:  #0891b2;
+      --text:      #e2e8f0;
+      --text-2:    #94a3b8;
+      --text-3:    #475569;
+      --mono:      'JetBrains Mono', monospace;
+      --sans:      'Inter', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ── GRID BACKGROUND ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 60px 60px;
+      opacity: 0.3;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2.5rem;
+      height: 60px;
+      background: rgba(7, 9, 15, 0.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-family: var(--mono);
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text);
+      letter-spacing: 0.08em;
+      text-decoration: none;
+    }
+
+    .nav-logo span { color: var(--blue); }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--text-2);
+      text-decoration: none;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--text); }
+
+    .nav-cta {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--bg);
+      background: var(--blue);
+      padding: 0.45rem 1.1rem;
+      border-radius: 4px;
+      text-decoration: none;
+      letter-spacing: 0.05em;
+      transition: background 0.2s;
+    }
+
+    .nav-cta:hover { background: var(--blue-dim); }
+
+    /* ── SECTIONS ── */
+    section { position: relative; z-index: 1; }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding-top: 60px;
+      overflow: hidden;
+    }
+
+    .hero-glow {
+      position: absolute;
+      top: 20%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 800px;
+      height: 400px;
+      background: radial-gradient(ellipse at center, rgba(59,130,246,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 2rem;
+      max-width: 900px;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      font-weight: 500;
+      color: var(--cyan);
+      background: rgba(6,182,212,0.08);
+      border: 1px solid rgba(6,182,212,0.2);
+      padding: 0.35rem 0.85rem;
+      border-radius: 2px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .hero-badge::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      background: var(--cyan);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.8); }
+    }
+
+    .hero-title {
+      font-size: clamp(4rem, 10vw, 8rem);
+      font-weight: 900;
+      line-height: 0.95;
+      letter-spacing: -0.04em;
+      color: var(--text);
+    }
+
+    .hero-title .accent {
+      background: linear-gradient(135deg, var(--blue) 0%, var(--cyan) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-sub {
+      font-size: 1.15rem;
+      font-weight: 400;
+      color: var(--text-2);
+      max-width: 520px;
+      line-height: 1.7;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .btn-primary {
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #fff;
+      background: linear-gradient(135deg, var(--blue), var(--cyan));
+      padding: 0.75rem 1.75rem;
+      border-radius: 4px;
+      text-decoration: none;
+      letter-spacing: 0.05em;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+
+    .btn-primary:hover { opacity: 0.85; transform: translateY(-1px); }
+
+    .btn-secondary {
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--text-2);
+      background: transparent;
+      border: 1px solid var(--border-2);
+      padding: 0.75rem 1.75rem;
+      border-radius: 4px;
+      text-decoration: none;
+      letter-spacing: 0.05em;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .btn-secondary:hover { border-color: var(--blue); color: var(--text); }
+
+    /* ── STATS STRIP ── */
+    #stats {
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      background: var(--bg-2);
+      padding: 2.5rem 0;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+    }
+
+    .stat-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 1.5rem 2rem;
+      border-right: 1px solid var(--border);
+    }
+
+    .stat-item:last-child { border-right: none; }
+
+    .stat-number {
+      font-family: var(--mono);
+      font-size: 2.8rem;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -0.03em;
+      line-height: 1;
+    }
+
+    .stat-number .stat-accent { color: var(--blue); }
+
+    .stat-label {
+      font-size: 0.72rem;
+      font-weight: 500;
+      color: var(--text-3);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    /* ── SECTION HEADER ── */
+    .section-header {
+      margin-bottom: 4rem;
+    }
+
+    .section-tag {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--blue);
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .section-title {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: var(--text);
+      line-height: 1.1;
+    }
+
+    .section-desc {
+      margin-top: 1rem;
+      font-size: 1rem;
+      color: var(--text-2);
+      max-width: 520px;
+      line-height: 1.7;
+    }
+
+    /* ── ORGANOGRAM ── */
+    #organogram { padding: 8rem 0; }
+
+    .org-tree {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+    }
+
+    .org-node {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .org-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.3rem;
+      padding: 1rem 2rem;
+      background: var(--bg-2);
+      border: 1px solid var(--border-2);
+      border-radius: 6px;
+      min-width: 180px;
+      text-align: center;
+      position: relative;
+      transition: border-color 0.2s;
+    }
+
+    .org-card:hover { border-color: var(--blue); }
+
+    .org-card.primary {
+      background: linear-gradient(135deg, rgba(59,130,246,0.15), rgba(6,182,212,0.08));
+      border-color: rgba(59,130,246,0.4);
+    }
+
+    .org-card.user {
+      background: rgba(255,255,255,0.03);
+      border-color: var(--border-2);
+    }
+
+    .org-card-tag {
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      font-weight: 600;
+      color: var(--blue);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    .org-card-name {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -0.01em;
+    }
+
+    .org-card-desc {
+      font-size: 0.72rem;
+      color: var(--text-3);
+      letter-spacing: 0.03em;
+    }
+
+    .org-line {
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, var(--border-2), var(--border));
+    }
+
+    .org-branch {
+      display: flex;
+      align-items: flex-start;
+      gap: 2rem;
+      position: relative;
+    }
+
+    .org-branch::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: calc(50% - 1px);
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, var(--border-2), var(--border));
+    }
+
+    .org-branch-children {
+      display: flex;
+      gap: 1.5rem;
+      padding-top: 40px;
+    }
+
+    .org-branch-line {
+      position: absolute;
+      top: 40px;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .org-col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+    }
+
+    .org-children-row {
+      display: flex;
+      gap: 1.5rem;
+      position: relative;
+    }
+
+    .org-children-row::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: calc(180px / 2);
+      right: calc(180px / 2);
+      height: 1px;
+      background: var(--border-2);
+    }
+
+    /* ── CAPABILITIES ── */
+    #capabilities { padding: 8rem 0; background: var(--bg-2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+
+    .cap-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .cap-card {
+      background: var(--bg-2);
+      padding: 2.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      transition: background 0.2s;
+    }
+
+    .cap-card:hover { background: var(--bg-3); }
+
+    .cap-icon {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(59,130,246,0.1);
+      border: 1px solid rgba(59,130,246,0.2);
+      border-radius: 6px;
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--blue);
+      letter-spacing: 0.05em;
+    }
+
+    .cap-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -0.01em;
+    }
+
+    .cap-desc {
+      font-size: 0.85rem;
+      color: var(--text-2);
+      line-height: 1.6;
+    }
+
+    .cap-count {
+      margin-top: auto;
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--text-3);
+      letter-spacing: 0.08em;
+    }
+
+    /* ── ARCHITECTURE ── */
+    #architecture { padding: 8rem 0; }
+
+    .arch-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .file-tree {
+      background: var(--bg-2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .file-tree-header {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 1rem 1.5rem;
+      border-bottom: 1px solid var(--border);
+      background: var(--bg-3);
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+
+    .dot-red { background: #ff5f57; }
+    .dot-yellow { background: #febc2e; }
+    .dot-green { background: #28c840; }
+
+    .file-tree-title {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      font-weight: 500;
+      color: var(--text-3);
+      margin-left: 0.5rem;
+    }
+
+    .file-tree-body {
+      padding: 1.5rem;
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      line-height: 2;
+    }
+
+    .tree-line { display: flex; align-items: center; gap: 0.5rem; }
+    .tree-indent-1 { padding-left: 1.2rem; }
+    .tree-indent-2 { padding-left: 2.4rem; }
+
+    .tree-dir { color: var(--blue); font-weight: 600; }
+    .tree-file { color: var(--text-2); }
+    .tree-count {
+      margin-left: auto;
+      font-size: 0.65rem;
+      color: var(--text-3);
+      background: var(--bg-3);
+      padding: 0.1rem 0.5rem;
+      border-radius: 2px;
+    }
+
+    .arch-stats {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .arch-stat-card {
+      background: var(--bg-2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.5rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      transition: border-color 0.2s;
+    }
+
+    .arch-stat-card:hover { border-color: var(--blue); }
+
+    .arch-stat-bar-wrap {
+      flex: 1;
+    }
+
+    .arch-stat-label {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+      letter-spacing: 0.03em;
+    }
+
+    .arch-stat-bar {
+      height: 4px;
+      background: var(--border);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .arch-stat-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--blue), var(--cyan));
+      border-radius: 2px;
+      transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+      width: 0%;
+    }
+
+    .arch-stat-num {
+      font-family: var(--mono);
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--text);
+      min-width: 60px;
+      text-align: right;
+    }
+
+    /* ── INSTALL ── */
+    #install { padding: 8rem 0; background: var(--bg-2); border-top: 1px solid var(--border); }
+
+    .install-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .terminal {
+      background: #010204;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .terminal-header {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 1rem 1.5rem;
+      background: #0a0c10;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .terminal-title {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      color: var(--text-3);
+      margin-left: 0.5rem;
+    }
+
+    .terminal-body {
+      padding: 2rem;
+      font-family: var(--mono);
+      font-size: 0.82rem;
+      line-height: 2;
+    }
+
+    .t-prompt { color: var(--text-3); }
+    .t-cmd { color: var(--text); }
+    .t-comment { color: var(--text-3); }
+    .t-string { color: var(--cyan); }
+    .t-output { color: #4ade80; font-size: 0.75rem; }
+
+    .install-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .install-step {
+      display: flex;
+      gap: 1.5rem;
+      align-items: flex-start;
+    }
+
+    .step-num {
+      width: 32px;
+      height: 32px;
+      min-width: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(59,130,246,0.1);
+      border: 1px solid rgba(59,130,246,0.3);
+      border-radius: 4px;
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--blue);
+    }
+
+    .step-content {}
+    .step-title { font-size: 0.9rem; font-weight: 700; color: var(--text); margin-bottom: 0.3rem; }
+    .step-desc { font-size: 0.82rem; color: var(--text-2); line-height: 1.6; }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2.5rem 0;
+      background: var(--bg);
+    }
+
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .footer-logo {
+      font-family: var(--mono);
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-2);
+      letter-spacing: 0.08em;
+    }
+
+    .footer-logo span { color: var(--blue); }
+
+    .footer-copy {
+      font-size: 0.75rem;
+      color: var(--text-3);
+      letter-spacing: 0.04em;
+    }
+
+    .footer-link {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: var(--text-3);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-link:hover { color: var(--blue); }
+
+    /* ── DIVIDER ── */
+    .divider {
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border-2), transparent);
+    }
+
+    /* ── ANIMATIONS ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .cap-grid { grid-template-columns: 1fr; }
+      .arch-grid { grid-template-columns: 1fr; }
+      .install-grid { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+      .org-children-row { flex-direction: column; align-items: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#hero" class="nav-logo"><span>_</span>hero</a>
+    <ul class="nav-links">
+      <li><a href="#organogram">Estrutura</a></li>
+      <li><a href="#capabilities">Capacidades</a></li>
+      <li><a href="#architecture">Arquitetura</a></li>
+      <li><a href="#install">Instalar</a></li>
+    </ul>
+    <a href="https://github.com/davimedeirosof/Hero-Skills-Framework" target="_blank" class="nav-cta">GitHub</a>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-glow"></div>
+    <div class="container">
+      <div class="hero-inner reveal">
+        <span class="hero-badge">v2.0 — Skills &amp; Framework</span>
+        <h1 class="hero-title">
+          <span class="accent">Hero</span><br />
+          Framework
+        </h1>
+        <p class="hero-sub">
+          Setup completo e otimizado do Claude Code. Orquestração multi-agente,
+          skills especializadas, commands, hooks e muito mais — tudo em um único repositório.
+        </p>
+        <div class="hero-actions">
+          <a href="#install" class="btn-primary">Instalar agora</a>
+          <a href="https://github.com/davimedeirosof/Hero-Skills-Framework" target="_blank" class="btn-secondary">Ver no GitHub</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <section id="stats">
+    <div class="container">
+      <div class="stats-grid">
+        <div class="stat-item reveal">
+          <span class="stat-number" data-target="916"><span class="stat-accent">0</span></span>
+          <span class="stat-label">Commands</span>
+        </div>
+        <div class="stat-item reveal">
+          <span class="stat-number" data-target="348"><span class="stat-accent">0</span></span>
+          <span class="stat-label">Agentes</span>
+        </div>
+        <div class="stat-item reveal">
+          <span class="stat-number" data-target="211"><span class="stat-accent">0</span></span>
+          <span class="stat-label">Skills</span>
+        </div>
+        <div class="stat-item reveal">
+          <span class="stat-number" data-target="28"><span class="stat-accent">0</span></span>
+          <span class="stat-label">Hooks</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ORGANOGRAM -->
+  <section id="organogram">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-tag">// estrutura</span>
+        <h2 class="section-title">Hierarquia do sistema</h2>
+        <p class="section-desc">Como os componentes se conectam e se comunicam dentro do framework.</p>
+      </div>
+
+      <div class="org-tree reveal">
+
+        <!-- DAVI -->
+        <div class="org-node">
+          <div class="org-card user">
+            <span class="org-card-tag">operador</span>
+            <span class="org-card-name">Davi</span>
+            <span class="org-card-desc">ponto de origem</span>
+          </div>
+          <div class="org-line"></div>
+        </div>
+
+        <!-- HERO -->
+        <div class="org-node">
+          <div class="org-card primary">
+            <span class="org-card-tag">agente principal</span>
+            <span class="org-card-name">Hero</span>
+            <span class="org-card-desc">Claude — CLAUDE.md</span>
+          </div>
+          <div class="org-line"></div>
+        </div>
+
+        <!-- LEVEL 3 -->
+        <div style="display:flex; gap:1.5rem; align-items:flex-start; position:relative;">
+          <div style="position:absolute; top:0; left:calc(50% - 0.5px); width:1px; height:0; background:var(--border-2);"></div>
+
+          <!-- horizontal bar -->
+          <div style="position:absolute; top:0; left:calc(90px); right:calc(90px); height:1px; background:var(--border-2);"></div>
+
+          <!-- COL 1 -->
+          <div class="org-col">
+            <div class="org-line" style="height:30px;"></div>
+            <div class="org-card">
+              <span class="org-card-tag">orquestrador</span>
+              <span class="org-card-name">Orquestrador</span>
+              <span class="org-card-desc">Opensquad</span>
+            </div>
+            <div class="org-line"></div>
+            <!-- sub items -->
+            <div style="display:flex; gap:1rem;">
+              <div class="org-col">
+                <div class="org-line" style="height:20px;"></div>
+                <div class="org-card" style="min-width:130px; padding:0.75rem 1rem;">
+                  <span class="org-card-tag">agentes</span>
+                  <span class="org-card-name" style="font-size:0.9rem;">348</span>
+                </div>
+              </div>
+              <div class="org-col">
+                <div class="org-line" style="height:20px;"></div>
+                <div class="org-card" style="min-width:130px; padding:0.75rem 1rem;">
+                  <span class="org-card-tag">skills</span>
+                  <span class="org-card-name" style="font-size:0.9rem;">211</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- COL 2 -->
+          <div class="org-col">
+            <div class="org-line" style="height:30px;"></div>
+            <div class="org-card" style="min-width:160px;">
+              <span class="org-card-tag">comandos</span>
+              <span class="org-card-name">Commands</span>
+              <span class="org-card-desc">916 slash cmds</span>
+            </div>
+          </div>
+
+          <!-- COL 3 -->
+          <div class="org-col">
+            <div class="org-line" style="height:30px;"></div>
+            <div class="org-card" style="min-width:160px;">
+              <span class="org-card-tag">nativos</span>
+              <span class="org-card-name">Claude Code</span>
+              <span class="org-card-desc">5 sub-agentes</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CAPABILITIES -->
+  <section id="capabilities">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-tag">// capacidades</span>
+        <h2 class="section-title">O que está disponível</h2>
+        <p class="section-desc">Cada componente do framework e o que ele oferece ao seu workflow.</p>
+      </div>
+
+      <div class="cap-grid reveal">
+        <div class="cap-card">
+          <div class="cap-icon">CMD</div>
+          <div class="cap-title">Slash Commands</div>
+          <div class="cap-desc">916 comandos organizados em 86 namespaces: dev, docs, deploy, test, performance, orchestration, spec-workflow e muito mais.</div>
+          <div class="cap-count">916 comandos disponíveis</div>
+        </div>
+        <div class="cap-card">
+          <div class="cap-icon">AGT</div>
+          <div class="cap-title">Agentes Especializados</div>
+          <div class="cap-desc">348 personas de agentes para papéis específicos: backend developer, security auditor, architect reviewer, ai engineer e centenas de outros.</div>
+          <div class="cap-count">348 agentes instalados</div>
+        </div>
+        <div class="cap-card">
+          <div class="cap-icon">SKL</div>
+          <div class="cap-title">Skills Modulares</div>
+          <div class="cap-desc">211 módulos de capacidade organizados por domínio: marketing, desenvolvimento, auditoria, performance, infraestrutura e qualidade.</div>
+          <div class="cap-count">211 skills ativas</div>
+        </div>
+        <div class="cap-card">
+          <div class="cap-icon">HK</div>
+          <div class="cap-title">Hooks Automatizados</div>
+          <div class="cap-desc">28 scripts JavaScript que disparam automaticamente em eventos: pre-push, commit guard, context monitor e status line.</div>
+          <div class="cap-count">28 hooks configurados</div>
+        </div>
+        <div class="cap-card">
+          <div class="cap-icon">SQD</div>
+          <div class="cap-title">Opensquad</div>
+          <div class="cap-desc">Sistema de orquestração multi-agente. Define squads com pipelines sequenciais onde cada agente executa uma etapa e passa o resultado para o próximo.</div>
+          <div class="cap-count">orquestrado pelo Hero</div>
+        </div>
+        <div class="cap-card">
+          <div class="cap-icon">GSD</div>
+          <div class="cap-title">GSD — Get Shit Done</div>
+          <div class="cap-desc">Sistema de desenvolvimento orientado por spec. Use /gsd:new-project para iniciar um projeto com context engineering completo e tasks estruturadas.</div>
+          <div class="cap-count">v1.26.0 instalado</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ARCHITECTURE -->
+  <section id="architecture">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-tag">// arquitetura</span>
+        <h2 class="section-title">Estrutura de arquivos</h2>
+        <p class="section-desc">Como o framework está organizado na sua máquina após a instalação.</p>
+      </div>
+
+      <div class="arch-grid">
+        <div class="file-tree reveal">
+          <div class="file-tree-header">
+            <div class="dot dot-red"></div>
+            <div class="dot dot-yellow"></div>
+            <div class="dot dot-green"></div>
+            <span class="file-tree-title">~/.claude</span>
+          </div>
+          <div class="file-tree-body">
+            <div class="tree-line"><span class="tree-dir">commands/</span><span class="tree-count">916 .md</span></div>
+            <div class="tree-line tree-indent-1"><span class="tree-file">dev/</span></div>
+            <div class="tree-line tree-indent-1"><span class="tree-file">docs/</span></div>
+            <div class="tree-line tree-indent-1"><span class="tree-file">deploy/</span></div>
+            <div class="tree-line tree-indent-1"><span class="tree-file">test/</span></div>
+            <div class="tree-line tree-indent-1"><span class="tree-file">... 82 outros</span></div>
+            <div class="tree-line" style="margin-top:0.5rem;"><span class="tree-dir">agents/</span><span class="tree-count">348 .md</span></div>
+            <div class="tree-line" style="margin-top:0.5rem;"><span class="tree-dir">skills/</span><span class="tree-count">211 dirs</span></div>
+            <div class="tree-line tree-indent-1"><span class="tree-file">SKILL.md</span></div>
+            <div class="tree-line" style="margin-top:0.5rem;"><span class="tree-dir">hooks/</span><span class="tree-count">28 .js</span></div>
+            <div class="tree-line tree-indent-1"><span class="tree-file">scripts/</span></div>
+            <div class="tree-line" style="margin-top:0.5rem;"><span class="tree-file tree-dir">CLAUDE.md</span><span class="tree-count" style="color:var(--cyan);">persona</span></div>
+            <div class="tree-line"><span class="tree-file">settings.json</span></div>
+          </div>
+        </div>
+
+        <div class="arch-stats reveal">
+          <div class="arch-stat-card">
+            <div class="arch-stat-bar-wrap">
+              <div class="arch-stat-label">Commands</div>
+              <div class="arch-stat-bar"><div class="arch-stat-fill" data-width="98"></div></div>
+            </div>
+            <div class="arch-stat-num">916</div>
+          </div>
+          <div class="arch-stat-card">
+            <div class="arch-stat-bar-wrap">
+              <div class="arch-stat-label">Agentes</div>
+              <div class="arch-stat-bar"><div class="arch-stat-fill" data-width="85"></div></div>
+            </div>
+            <div class="arch-stat-num">348</div>
+          </div>
+          <div class="arch-stat-card">
+            <div class="arch-stat-bar-wrap">
+              <div class="arch-stat-label">Skills</div>
+              <div class="arch-stat-bar"><div class="arch-stat-fill" data-width="72"></div></div>
+            </div>
+            <div class="arch-stat-num">211</div>
+          </div>
+          <div class="arch-stat-card">
+            <div class="arch-stat-bar-wrap">
+              <div class="arch-stat-label">Hooks</div>
+              <div class="arch-stat-bar"><div class="arch-stat-fill" data-width="30"></div></div>
+            </div>
+            <div class="arch-stat-num">28</div>
+          </div>
+          <div class="arch-stat-card">
+            <div class="arch-stat-bar-wrap">
+              <div class="arch-stat-label">Namespaces de Commands</div>
+              <div class="arch-stat-bar"><div class="arch-stat-fill" data-width="92"></div></div>
+            </div>
+            <div class="arch-stat-num">86</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INSTALL -->
+  <section id="install">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-tag">// instalação</span>
+        <h2 class="section-title">Pronto em 3 passos</h2>
+        <p class="section-desc">Clone o repositório e execute o script. Tudo é configurado automaticamente.</p>
+      </div>
+
+      <div class="install-grid">
+        <div class="terminal reveal">
+          <div class="terminal-header">
+            <div class="dot dot-red"></div>
+            <div class="dot dot-yellow"></div>
+            <div class="dot dot-green"></div>
+            <span class="terminal-title">bash</span>
+          </div>
+          <div class="terminal-body">
+            <div><span class="t-comment"># Clone o repositório</span></div>
+            <div><span class="t-prompt">$ </span><span class="t-cmd">git clone </span><span class="t-string">https://github.com/davimedeirosof/Hero-Skills-Framework.git</span></div>
+            <br />
+            <div><span class="t-comment"># Acesse o diretório</span></div>
+            <div><span class="t-prompt">$ </span><span class="t-cmd">cd Hero-Skills-Framework</span></div>
+            <br />
+            <div><span class="t-comment"># Execute o instalador</span></div>
+            <div><span class="t-prompt">$ </span><span class="t-cmd">./install.sh</span></div>
+            <br />
+            <div><span class="t-output">  Hero Framework Installer</span></div>
+            <div><span class="t-output">  ─────────────────────────</span></div>
+            <div><span class="t-output">  [1/10] Instalando slash commands...</span></div>
+            <div><span class="t-output">         916 commands instalados</span></div>
+            <div><span class="t-output">  [2/10] Instalando agent personas...</span></div>
+            <div><span class="t-output">         348 agents instalados</span></div>
+            <div><span class="t-output">  ...</span></div>
+            <div><span class="t-output">  Instalacao completa!</span></div>
+          </div>
+        </div>
+
+        <div class="install-steps reveal">
+          <div class="install-step">
+            <div class="step-num">01</div>
+            <div class="step-content">
+              <div class="step-title">Clone o repositório</div>
+              <div class="step-desc">Faça o clone do repositório Hero-Skills-Framework para sua máquina local via Git.</div>
+            </div>
+          </div>
+          <div class="install-step">
+            <div class="step-num">02</div>
+            <div class="step-content">
+              <div class="step-title">Execute o install.sh</div>
+              <div class="step-desc">O script faz backup do seu ~/.claude atual e instala todos os componentes: commands, agents, skills, hooks, persona Hero e Opensquad.</div>
+            </div>
+          </div>
+          <div class="install-step">
+            <div class="step-num">03</div>
+            <div class="step-content">
+              <div class="step-title">Abra o Claude Code</div>
+              <div class="step-desc">Abra uma nova sessão. O Claude responderá como Hero, com todos os 916 commands e 348 agentes prontos para uso.</div>
+            </div>
+          </div>
+          <div class="install-step">
+            <div class="step-num">04</div>
+            <div class="step-content">
+              <div class="step-title">Instale os plugins (opcional)</div>
+              <div class="step-desc">
+                <code style="font-family:var(--mono); font-size:0.75rem; color:var(--cyan);">/plugin install planning-with-files@planning-with-files</code><br />
+                <code style="font-family:var(--mono); font-size:0.75rem; color:var(--cyan);">/plugin install claude-hud</code><br />
+                <code style="font-family:var(--mono); font-size:0.75rem; color:var(--cyan);">/plugin install oh-my-claudecode</code>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="footer-inner">
+        <span class="footer-logo"><span>_</span>hero — skills &amp; framework</span>
+        <span class="footer-copy">Davi Medeiros &mdash; 2026</span>
+        <a href="https://github.com/davimedeirosof/Hero-Skills-Framework" target="_blank" class="footer-link">github.com/davimedeirosof</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // ── REVEAL ON SCROLL
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => entry.target.classList.add('visible'), i * 80);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    reveals.forEach(el => observer.observe(el));
+
+    // ── COUNTER ANIMATION
+    function animateCounter(el) {
+      const target = parseInt(el.dataset.target);
+      const span = el.querySelector('span');
+      let current = 0;
+      const step = Math.ceil(target / 60);
+      const timer = setInterval(() => {
+        current = Math.min(current + step, target);
+        span.textContent = current.toLocaleString('pt-BR');
+        if (current >= target) clearInterval(timer);
+      }, 20);
+    }
+
+    const counterObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          animateCounter(entry.target);
+          counterObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.5 });
+
+    document.querySelectorAll('.stat-number[data-target]').forEach(el => counterObserver.observe(el));
+
+    // ── BAR ANIMATION
+    const barObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.querySelectorAll('.arch-stat-fill').forEach(bar => {
+            setTimeout(() => bar.style.width = bar.dataset.width + '%', 200);
+          });
+          barObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.3 });
+
+    document.querySelectorAll('.arch-stats').forEach(el => barObserver.observe(el));
+
+    // ── NAV HIDE ON SCROLL
+    let lastY = 0;
+    window.addEventListener('scroll', () => {
+      const nav = document.querySelector('nav');
+      const y = window.scrollY;
+      nav.style.transform = y > lastY && y > 100 ? 'translateY(-100%)' : 'translateY(0)';
+      nav.style.transition = 'transform 0.3s ease';
+      lastY = y;
+    });
+  </script>
+</body>
+</html>
