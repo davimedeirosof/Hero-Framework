@@ -4,7 +4,7 @@ agent:
   webskip: false
   metadata:
     id: "_opensquad/core/architect"
-    name: Davi
+    name: Hero
     title: Squad Architect
     icon: 🧠
     squad: core
