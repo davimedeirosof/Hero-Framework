@@ -5,34 +5,48 @@ Setup completo e otimizado do Claude Code do Davi Medeiros. 937 commands, 354 ag
 ## Quick Install
 
 ```bash
-git clone https://github.com/davimedeirosof/Hero-Skills-Framework.git
-cd Hero-Skills-Framework
+git clone https://github.com/davimedeirosof/Hero-Framework.git
+cd Hero-Framework
 ./install.sh
 ```
 
-## Changelog
+## Versoes do Sistema
 
-### v2.1
-- +9 skills: apify, blotato, canva, image-creator, image-fetcher, image-generator, instagram-publisher, opensquad-agent-creator, opensquad-skill-creator
+### V1 — Estrutura inicial
+- 109 slash commands (15 namespaces)
+- 16 agentes
+- 22 hooks
+- 5 marketplaces
+- 8 project rules
+
+### V2 — Reconstrucao completa
+- 937 slash commands (86 namespaces)
+- 344 agentes especializados
+- 211 skills
+- 28 hooks
+- 14 marketplaces
+- Opensquad: framework multi-agente
+- GSD: meta-prompting integrado
+
+### V2.1 — Expansao de capacidades
 - +1 agente: skill-hunter (busca e instala novas skills automaticamente)
+- +9 skills: apify, blotato, canva, image-creator, image-fetcher, image-generator, instagram-publisher, opensquad-agent-creator, opensquad-skill-creator
 - Painel dinamico com stats atualizados via GitHub Actions
 - CLAUDE.md: persona Hero configurada
 
-### v2.0 (base)
-937 commands, 354 agents, 220 skills, 28 hooks
+### V2.2 — Padronizacao de identidade
+- Repositorio renomeado para Hero-Framework
+- Padronizacao conceitual e de nomenclatura do sistema
+- Versionamento automatico a cada push
 
-## V1 vs V2.1
+## Quadro de Componentes por Versao
 
-| Componente | V1 | V2.1 | Crescimento |
-|---|---|---|---|
-| Slash Commands | 109 | 937 | 8.6x |
-| Agents | 16 | 354 | 22.1x |
-| Skills | 0 | 220 | novo |
-| Hooks | 22 | 28 | +27% |
-| Marketplaces | 5 | 14 | 2.8x |
-| Project Rules | 8 | 8 | = |
-| Opensquad | - | 30 files | novo |
-| Command Namespaces | 15 | 86 | 5.7x |
+| Versao | Alteracao | Impacto |
+|---|---|---|
+| V1 | Estrutura base clonada | Ponto de partida |
+| V2 | +828 commands, +328 agentes, +211 skills, +6 hooks | Reconstrucao completa |
+| V2.1 | +9 skills, +1 agente skill-hunter, painel dinamico | Expansao operacional |
+| V2.2 | Renomeacao para Hero-Framework, versionamento automatico | Identidade padronizada |
 
 ### Novos namespaces na V2
 
@@ -127,7 +141,7 @@ Framework de orquestracao multi-agente com:
 ## Estrutura
 
 ```
-Hero-Skills-Framework/
+Hero-Framework/
 ├── install.sh              # Script de instalacao
 ├── settings.json           # Config global (hooks, permissions, marketplaces)
 ├── .mcp.json               # MCP servers config
