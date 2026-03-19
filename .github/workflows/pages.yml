@@ -27,18 +27,24 @@ jobs:
       - name: Generate stats.json
         run: |
           COMMANDS=$(find commands -name "*.md" 2>/dev/null | wc -l | tr -d ' ')
-          AGENTS=$(find agents -name "*.md" 2>/dev/null | grep -v README | wc -l | tr -d ' ')
+          AGENTS_REPO=$(find agents -name "*.md" 2>/dev/null | grep -v README | wc -l | tr -d ' ')
           SKILLS=$(find skills -mindepth 1 -maxdepth 1 -type d 2>/dev/null | wc -l | tr -d ' ')
           HOOKS=$(find hooks -name "*.js" 2>/dev/null | wc -l | tr -d ' ')
           NAMESPACES=$(find commands -mindepth 1 -maxdepth 1 -type d 2>/dev/null | wc -l | tr -d ' ')
-          AGENTS_TOTAL=$((AGENTS + 5))
+
+          # 4 agentes GSD instalados via npx (nao estao no repo)
+          # 4 agentes svelte nao copiados por restricao de nome no Windows
+          AGENTS_EXTRA=8
+          AGENTS_INSTALLED=$((AGENTS_REPO + AGENTS_EXTRA))
+          AGENTS_NATIVE=5
+          AGENTS_TOTAL=$((AGENTS_INSTALLED + AGENTS_NATIVE))
           UPDATED=$(date +"%Y-%m-%d")
 
           cat > stats.json << EOF
           {
             "commands": $COMMANDS,
-            "agents_installed": $AGENTS,
-            "agents_native": 5,
+            "agents_installed": $AGENTS_INSTALLED,
+            "agents_native": $AGENTS_NATIVE,
             "agents_total": $AGENTS_TOTAL,
             "skills": $SKILLS,
             "hooks": $HOOKS,

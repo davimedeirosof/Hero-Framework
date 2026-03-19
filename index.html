@@ -1303,7 +1303,7 @@
       if (!res.ok) return;
       const s = await res.json();
 
-      // update stat counters
+      // update stat counters — atualiza data-to E o texto exibido
       const map = {
         '[data-to="916"]':  s.commands,
         '[data-to="353"]':  s.agents_total,
@@ -1312,7 +1312,11 @@
       };
       Object.entries(map).forEach(([sel, val]) => {
         const el = document.querySelector(sel);
-        if (el) el.dataset.to = val;
+        if (el) {
+          el.dataset.to = val;
+          const span = el.querySelector('span');
+          if (span) span.textContent = val.toLocaleString('pt-BR');
+        }
       });
 
       // update sub labels
@@ -1370,8 +1374,6 @@
     } catch(e) { /* fallback para valores hardcoded */ }
   }
 
-  loadStats();
-
   // REVEAL
   const obs = new IntersectionObserver(entries => {
     entries.forEach((e, i) => {
@@ -1412,6 +1414,9 @@
     });
   }, { threshold: 0.2 });
   document.querySelectorAll('.bar-list').forEach(el => bObs.observe(el));
+
+  // LOAD STATS — roda depois que tudo está pronto, sem causar scroll
+  loadStats();
 
   // NAV SCROLL HIDE
   let py = 0;
