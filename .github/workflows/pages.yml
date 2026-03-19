@@ -40,7 +40,7 @@ jobs:
           AGENTS_TOTAL=$((AGENTS_INSTALLED + AGENTS_NATIVE))
           UPDATED=$(date +"%Y-%m-%d")
 
-          cat > stats.json << EOF
+          cat > docs/stats.json << EOF
           {
             "commands": $COMMANDS,
             "agents_installed": $AGENTS_INSTALLED,
@@ -54,7 +54,7 @@ jobs:
           EOF
 
           echo "Stats gerados:"
-          cat stats.json
+          cat docs/stats.json
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
@@ -62,7 +62,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: '.'
+          path: 'docs'
 
       - name: Deploy to GitHub Pages
         id: deployment
