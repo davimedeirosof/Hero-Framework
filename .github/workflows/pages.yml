@@ -27,8 +27,9 @@ jobs:
       - name: Generate stats.json
         run: |
           COMMANDS_REPO=$(find commands -name "*.md" 2>/dev/null | wc -l | tr -d ' ')
-          # 21 comandos svelte nao copiados por restricao de nome no Windows (caracter :)
-          COMMANDS=$((COMMANDS_REPO + 21))
+          # 5 comandos svelte ainda faltando no repo (restricao Windows, caracter :)
+          # 16 dos 21 originais ja foram subidos para o GitHub com sucesso
+          COMMANDS=$((COMMANDS_REPO + 5))
           AGENTS_REPO=$(find agents -name "*.md" 2>/dev/null | grep -v README | wc -l | tr -d ' ')
           SKILLS=$(find skills -mindepth 1 -maxdepth 1 -type d 2>/dev/null | wc -l | tr -d ' ')
           HOOKS=$(find hooks -name "*.js" 2>/dev/null | wc -l | tr -d ' ')
