@@ -1,6 +1,6 @@
-# Hero-Skills-Framework
+# Hero-Skills-Framework v2.1
 
-Setup completo e otimizado do Claude Code do Davi Medeiros. 937 commands, 344 agents, 211 skills, 28 hooks, 14 marketplaces, Opensquad multi-agent orchestration, GSD meta-prompting, e muito mais.
+Setup completo e otimizado do Claude Code do Davi Medeiros. 937 commands, 354 agents, 220 skills, 28 hooks, 14 marketplaces, Opensquad multi-agent orchestration, GSD meta-prompting, e muito mais.
 
 ## Quick Install
 
@@ -10,13 +10,24 @@ cd Hero-Skills-Framework
 ./install.sh
 ```
 
-## V1 vs V2
+## Changelog
 
-| Componente | V1 | V2 | Crescimento |
+### v2.1
+- +9 skills: apify, blotato, canva, image-creator, image-fetcher, image-generator, instagram-publisher, opensquad-agent-creator, opensquad-skill-creator
+- +1 agente: skill-hunter (busca e instala novas skills automaticamente)
+- Painel dinamico com stats atualizados via GitHub Actions
+- CLAUDE.md: persona Hero configurada
+
+### v2.0 (base)
+937 commands, 344 agents, 211 skills, 28 hooks
+
+## V1 vs V2.1
+
+| Componente | V1 | V2.1 | Crescimento |
 |---|---|---|---|
 | Slash Commands | 109 | 937 | 8.6x |
-| Agents | 16 | 344 | 21.5x |
-| Skills | 0 | 211 | novo |
+| Agents | 16 | 354 | 22.1x |
+| Skills | 0 | 220 | novo |
 | Hooks | 22 | 28 | +27% |
 | Marketplaces | 5 | 14 | 2.8x |
 | Project Rules | 8 | 8 | = |
@@ -77,7 +88,7 @@ cd Hero-Skills-Framework
 - `session/` — handoff documents for session continuity
 - `webmcp/` — WebMCP tool creation and management
 
-### 344 Agent Personas
+### 354 Agent Personas
 
 Agentes especializados cobrindo todas as areas:
 - **Dev:** React, Next.js, Vue, Svelte, Angular, Django, Rails, Spring Boot, Laravel, Flutter, Swift, Kotlin, Rust, Go, C/C++, Elixir
@@ -88,7 +99,7 @@ Agentes especializados cobrindo todas as areas:
 - **Marketing:** SEO, paid media, content, social, email, CRO, analytics
 - **China market:** Douyin, Xiaohongshu, WeChat, Baidu, Bilibili, Kuaishou
 
-### 211 Skills
+### 220 Skills
 
 Libraries de skills organizadas por funcao:
 - **Learning Network (ln-*):** 50+ skills para documentacao, auditoria, bootstrap, testing, otimizacao
@@ -116,13 +127,14 @@ Framework de orquestracao multi-agente com:
 ## Estrutura
 
 ```
-claude-rubim-v2/
+Hero-Skills-Framework/
 ├── install.sh              # Script de instalacao
 ├── settings.json           # Config global (hooks, permissions, marketplaces)
 ├── .mcp.json               # MCP servers config
+├── CLAUDE.md               # Persona Hero
 ├── commands/               # 937 slash commands (86 namespaces)
-├── agents/                 # 344 agent personas
-├── skills/                 # 211 skill libraries
+├── agents/                 # 354 agent personas
+├── skills/                 # 220 skill libraries
 ├── hooks/                  # 28 hook scripts
 │   ├── scripts/            # Hook scripts (Node.js)
 │   ├── gsd-context-monitor.js
