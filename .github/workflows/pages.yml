@@ -36,7 +36,8 @@ jobs:
 
           # 4 agentes GSD instalados via npx (nao estao no repo)
           # 4 agentes svelte nao copiados por restricao de nome no Windows
-          AGENTS_EXTRA=8
+          # 1 skill-hunter (compensacao de contagem do find)
+          AGENTS_EXTRA=9
           AGENTS_INSTALLED=$((AGENTS_REPO + AGENTS_EXTRA))
           AGENTS_NATIVE=5
           AGENTS_TOTAL=$((AGENTS_INSTALLED + AGENTS_NATIVE))
