@@ -48,7 +48,7 @@ cd Hero-Framework
 | V2.1 | +9 skills, +1 agente skill-hunter, painel dinamico | Expansao operacional |
 | V2.2 | Renomeacao para Hero-Framework, versionamento automatico | Identidade padronizada |
 
-### Novos namespaces na V2
+### Namespaces disponíveis na V2.2
 
 **Desenvolvimento:**
 - `deploy/` — releases, rollbacks, CI/CD, containerization, Kubernetes
@@ -102,7 +102,7 @@ cd Hero-Framework
 - `session/` — handoff documents for session continuity
 - `webmcp/` — WebMCP tool creation and management
 
-### 354 Agent Personas
+### 354 Agent Personas na V2.2
 
 Agentes especializados cobrindo todas as areas:
 - **Dev:** React, Next.js, Vue, Svelte, Angular, Django, Rails, Spring Boot, Laravel, Flutter, Swift, Kotlin, Rust, Go, C/C++, Elixir
@@ -113,14 +113,14 @@ Agentes especializados cobrindo todas as areas:
 - **Marketing:** SEO, paid media, content, social, email, CRO, analytics
 - **China market:** Douyin, Xiaohongshu, WeChat, Baidu, Bilibili, Kuaishou
 
-### 220 Skills
+### 220 Skills na V2.2
 
 Libraries de skills organizadas por funcao:
 - **Learning Network (ln-*):** 50+ skills para documentacao, auditoria, bootstrap, testing, otimizacao
 - **Marketing:** copywriting, content strategy, SEO, email marketing, pricing, CRO
 - **Opensquad:** multi-agent orchestration framework completo
 
-### Opensquad (novo)
+### Opensquad na V2.2
 
 Framework de orquestracao multi-agente com:
 - Architect agent para criacao de squads
@@ -129,7 +129,7 @@ Framework de orquestracao multi-agente com:
 - 24 best-practices guides (Instagram, YouTube, Twitter, LinkedIn, etc.)
 - Browser persistente para sessoes de redes sociais
 
-### Novos hooks na V2
+### 28 Hooks na V2.2
 
 - `gsd-context-monitor.js` — monitoramento de contexto GSD
 - `gsd-statusline.js` — status line dinamica
