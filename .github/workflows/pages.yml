@@ -59,36 +59,52 @@ jobs:
           echo "HOOKS=$HOOKS"               >> $GITHUB_ENV
           echo "NAMESPACES=$NAMESPACES"     >> $GITHUB_ENV
 
-      - name: Increment version
+      - name: Check if version should increment
         run: |
+          COMMIT_MSG=$(git log -1 --format="%s" HEAD)
           CURRENT=$(cat VERSION | tr -d '[:space:]')
           MAJOR=$(echo $CURRENT | cut -d. -f1)
           MINOR=$(echo $CURRENT | cut -d. -f2)
           NEW_VERSION="$MAJOR.$((MINOR + 1))"
-          echo $NEW_VERSION > VERSION
-          echo "NEW_VERSION=$NEW_VERSION" >> $GITHUB_ENV
-          echo "Versao: $CURRENT -> $NEW_VERSION"
 
-      - name: Get commit message
-        run: |
-          MSG=$(git log -1 --format="%s" HEAD | sed 's/[&/\]/\\&/g')
-          echo "COMMIT_MSG=$MSG" >> $GITHUB_ENV
+          # Incrementa se o commit contiver [bump]
+          if echo "$COMMIT_MSG" | grep -q "\[bump\]"; then
+            echo $NEW_VERSION > VERSION
+            echo "NEW_VERSION=$NEW_VERSION" >> $GITHUB_ENV
+            echo "SHOULD_ADD_ENTRY=true"    >> $GITHUB_ENV
+            echo "Versao incrementada (bump): $CURRENT -> $NEW_VERSION"
+          else
+            echo "NEW_VERSION=$CURRENT"     >> $GITHUB_ENV
+            echo "SHOULD_ADD_ENTRY=false"   >> $GITHUB_ENV
+            echo "Versao mantida: $CURRENT"
+          fi
+
+          # Salvar mensagem sanitizada para uso posterior
+          SAFE_MSG=$(echo "$COMMIT_MSG" | sed 's/[&/\]/\\&/g; s/\[bump\]//g' | xargs)
+          echo "COMMIT_MSG=$SAFE_MSG" >> $GITHUB_ENV
 
       - name: Update README
         run: |
-          sed -i "s/# Hero-Framework v[0-9]*\.[0-9]*/# Hero-Framework v$NEW_VERSION/" README.md
+          # Numeros sempre atualizados
           sed -i "s/[0-9]* commands, [0-9]* agents, [0-9]* skills, [0-9]* hooks/$COMMANDS commands, $AGENTS_TOTAL agents, $SKILLS skills, $HOOKS hooks/" README.md
-          sed -i "s/na V[0-9]*\.[0-9]*/na V$NEW_VERSION/g" README.md
+          # Versao e titulos so atualizam se houver bump
+          if [ "$SHOULD_ADD_ENTRY" = "true" ]; then
+            sed -i "s/# Hero-Framework v[0-9]*\.[0-9]*/# Hero-Framework v$NEW_VERSION/" README.md
+            sed -i "s/na V[0-9]*\.[0-9]*/na V$NEW_VERSION/g" README.md
+          fi
 
       - name: Update dashboard
         run: |
-          # Badge de versao
-          sed -i "s/Disponivel Agora Versao [0-9]*\.[0-9]*/Disponivel Agora Versao $NEW_VERSION/" docs/index.html
-          # Label e coluna da tabela comparacao (sempre V1 vs versao mais recente)
-          sed -i "s/V1 vs V[0-9]*\.[0-9]*/V1 vs V$NEW_VERSION/g" docs/index.html
-          sed -i "s|<div class=\"comp-cell\">V[0-9]*\.[0-9]*</div>|<div class=\"comp-cell\">V$NEW_VERSION</div>|g" docs/index.html
+          # Numeros sempre atualizados via stats.json (carregados pelo JS)
+          # Badge, label e coluna so atualizam se houver bump
+          if [ "$SHOULD_ADD_ENTRY" = "true" ]; then
+            sed -i "s/Disponivel Agora Versao [0-9]*\.[0-9]*/Disponivel Agora Versao $NEW_VERSION/" docs/index.html
+            sed -i "s/V1 vs V[0-9]*\.[0-9]*/V1 vs V$NEW_VERSION/g" docs/index.html
+            sed -i "s|<div class=\"comp-cell\">V[0-9]*\.[0-9]*</div>|<div class=\"comp-cell\">V$NEW_VERSION</div>|g" docs/index.html
+          fi
 
       - name: Add version entry to versions.html
+        if: env.SHOULD_ADD_ENTRY == 'true'
         run: |
           DATE=$(date +"%b %Y")
           cat > /tmp/new_version.html << HTMLEOF
