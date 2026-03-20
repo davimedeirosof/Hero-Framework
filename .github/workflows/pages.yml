@@ -81,9 +81,12 @@ jobs:
           CHANGED=$(git diff --name-only HEAD~1 HEAD 2>/dev/null || echo "")
 
           # Detectar mudanca de identidade visual ou nome
+          # (ignorar em workflow_dispatch — apenas pushes reais contam)
           VISUAL_CHANGED=false
-          if echo "$CHANGED" | grep -qE "docs/index\.html|docs/versions\.html|CLAUDE\.md"; then
-            VISUAL_CHANGED=true
+          if [ "${{ github.event_name }}" = "push" ]; then
+            if echo "$CHANGED" | grep -qE "docs/index\.html|docs/versions\.html|CLAUDE\.md"; then
+              VISUAL_CHANGED=true
+            fi
           fi
 
           # Detectar mudanca nos numeros
