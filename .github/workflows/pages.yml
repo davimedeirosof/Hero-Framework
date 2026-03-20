@@ -77,20 +77,35 @@ jobs:
             PREV_NAMESPACES=$(grep '"namespaces"' docs/stats.json | grep -o '[0-9]*' | head -1)
           fi
 
-          # Incrementa se qualquer numero mudou
+          # Verificar arquivos alterados no commit do usuario
+          CHANGED=$(git diff --name-only HEAD~1 HEAD 2>/dev/null || echo "")
+
+          # Detectar mudanca de identidade visual ou nome
+          VISUAL_CHANGED=false
+          if echo "$CHANGED" | grep -qE "docs/index\.html|docs/versions\.html|CLAUDE\.md"; then
+            VISUAL_CHANGED=true
+          fi
+
+          # Detectar mudanca nos numeros
+          NUMBERS_CHANGED=false
           if [ "$COMMANDS" != "$PREV_COMMANDS" ] || \
              [ "$AGENTS_TOTAL" != "$PREV_AGENTS" ] || \
              [ "$SKILLS" != "$PREV_SKILLS" ] || \
              [ "$HOOKS" != "$PREV_HOOKS" ] || \
              [ "$NAMESPACES" != "$PREV_NAMESPACES" ]; then
+            NUMBERS_CHANGED=true
+          fi
+
+          # Incrementa se numeros ou identidade visual mudaram
+          if [ "$NUMBERS_CHANGED" = "true" ] || [ "$VISUAL_CHANGED" = "true" ]; then
             echo $NEW_VERSION > VERSION
             echo "NEW_VERSION=$NEW_VERSION" >> $GITHUB_ENV
             echo "SHOULD_ADD_ENTRY=true"    >> $GITHUB_ENV
-            echo "Versao incrementada: $CURRENT -> $NEW_VERSION"
+            echo "Versao incrementada: $CURRENT -> $NEW_VERSION (numeros=$NUMBERS_CHANGED visual=$VISUAL_CHANGED)"
           else
             echo "NEW_VERSION=$CURRENT"     >> $GITHUB_ENV
             echo "SHOULD_ADD_ENTRY=false"   >> $GITHUB_ENV
-            echo "Versao mantida: $CURRENT (nenhum numero mudou)"
+            echo "Versao mantida: $CURRENT"
           fi
 
           SAFE_MSG=$(echo "$COMMIT_MSG" | sed 's/[&/\]/\\&/g' | xargs)
