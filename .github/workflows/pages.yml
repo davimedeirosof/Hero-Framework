@@ -67,20 +67,33 @@ jobs:
           MINOR=$(echo $CURRENT | cut -d. -f2)
           NEW_VERSION="$MAJOR.$((MINOR + 1))"
 
-          # Incrementa se o commit contiver [bump]
-          if echo "$COMMIT_MSG" | grep -q "\[bump\]"; then
+          # Ler numeros anteriores do stats.json (se existir)
+          PREV_COMMANDS=0; PREV_AGENTS=0; PREV_SKILLS=0; PREV_HOOKS=0; PREV_NAMESPACES=0
+          if [ -f docs/stats.json ]; then
+            PREV_COMMANDS=$(grep '"commands"'   docs/stats.json | grep -o '[0-9]*' | head -1)
+            PREV_AGENTS=$(grep '"agents_total"' docs/stats.json | grep -o '[0-9]*' | head -1)
+            PREV_SKILLS=$(grep '"skills"'       docs/stats.json | grep -o '[0-9]*' | head -1)
+            PREV_HOOKS=$(grep '"hooks"'         docs/stats.json | grep -o '[0-9]*' | head -1)
+            PREV_NAMESPACES=$(grep '"namespaces"' docs/stats.json | grep -o '[0-9]*' | head -1)
+          fi
+
+          # Incrementa se qualquer numero mudou
+          if [ "$COMMANDS" != "$PREV_COMMANDS" ] || \
+             [ "$AGENTS_TOTAL" != "$PREV_AGENTS" ] || \
+             [ "$SKILLS" != "$PREV_SKILLS" ] || \
+             [ "$HOOKS" != "$PREV_HOOKS" ] || \
+             [ "$NAMESPACES" != "$PREV_NAMESPACES" ]; then
             echo $NEW_VERSION > VERSION
             echo "NEW_VERSION=$NEW_VERSION" >> $GITHUB_ENV
             echo "SHOULD_ADD_ENTRY=true"    >> $GITHUB_ENV
-            echo "Versao incrementada (bump): $CURRENT -> $NEW_VERSION"
+            echo "Versao incrementada: $CURRENT -> $NEW_VERSION"
           else
             echo "NEW_VERSION=$CURRENT"     >> $GITHUB_ENV
             echo "SHOULD_ADD_ENTRY=false"   >> $GITHUB_ENV
-            echo "Versao mantida: $CURRENT"
+            echo "Versao mantida: $CURRENT (nenhum numero mudou)"
           fi
 
-          # Salvar mensagem sanitizada para uso posterior
-          SAFE_MSG=$(echo "$COMMIT_MSG" | sed 's/[&/\]/\\&/g; s/\[bump\]//g' | xargs)
+          SAFE_MSG=$(echo "$COMMIT_MSG" | sed 's/[&/\]/\\&/g' | xargs)
           echo "COMMIT_MSG=$SAFE_MSG" >> $GITHUB_ENV
 
       - name: Update README
