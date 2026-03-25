@@ -58,6 +58,9 @@ Posicionamento na interseção de **ICT/SMC + Order Flow + Mesa Proprietária (S
 - **Carrosséis:** 2-3x/semana
 - **Stories:** diariamente
 - **Lives:** 1x/semana (maior engajamento em mesas BR)
+- **Eventos macro:** publicação mesmo dia ou D+1
+- **Semanas normais:** 3-4 carrosséis semanais
+- **Horários:** 7h–9h ou 18h–20h (BRT)
 
 ### Identidade visual (regras de campo)
 - Paleta base: navy `#0D1117`, branco, dourado `#F59E0B` ou teal `#00D4AA`
@@ -191,6 +194,118 @@ Rex Roteirista, Hugo HeyGen, Elia ElevenLabs, Sam Submagic, Bea B-Roll,
 Pablo Publisher, Tina Trend, Ana Analytics, Cal Calendar, Rip Repurpose
 
 ---
+
+## Identidade do Gabriel Rubim (clone facial)
+
+- Pele clara/oliva, olhos castanho-avelã, barba bem aparada
+- Tattoo sleeve braço esquerdo, porte atlético, estilo dark minimal
+- Books disponíveis: minimalista e impactante
+- **NUNCA** usar stock genérico — usar fotos editoriais reais (Firecrawl) ou gerar via Gemini / clonar com `clone_image.py`
+
+## Tom de voz (6 modos)
+
+| Tom | Quando usar | Características |
+|-----|-------------|----------------|
+| **1 — Analítico Direto** | Análises, teses de mercado (padrão) | Linguagem técnica acessível, afirmações claras com justificativa |
+| **2 — Educacional Paciente** | Conteúdo conceitual, tutoriais | Professor com analogias, presume leitor iniciante |
+| **3 — Provocativo Contrário** | Desmistificação, teses contrárias | Desafia consenso com argumentação, tensão intelectual |
+| **4 — Urgente Noticioso** | Breaking news, bancos centrais | "O que aconteceu + significado + ação", publicar em ≤4h |
+| **5 — Inspiracional Practitioner** | Mentalidade, disciplina, risco | Motivação ancorada em experiência real operacional |
+| **6 — Storytelling Pessoal** | Trades reais, bastidores | 1ª pessoa, datas/horários específicos, setup→execução→resultado→aprendizado |
+
+**Regras gerais de tom:**
+- Português BR + termos financeiros em inglês (FOMC, NFP, order block, etc.)
+- Registro informal profissional com contrações naturais
+- Emojis: 1-3 por parágrafo em captions; **zero em slides**
+- Parágrafos curtos, listas para múltiplos itens, negrito para ênfase
+- Minúsculas, frases curtas, CTA final sempre (salva/comenta/manda)
+- Viés conservador com fé cristã naturalmente integrada
+
+## Critérios de qualidade (scoring)
+
+Todos os critérios devem passar antes da publicação. Um reprovado = bloqueio.
+
+| Critério | Peso | Mínimo |
+|----------|------|--------|
+| Precisão Factual | 5x | Fontes primárias: BLS, Fed, BCB, Bloomberg |
+| Compliance CVM/ANBIMA | 5x | Abaixo de 4 = reprovação automática |
+| Estrutura do Carrossel | 4x | 8-12 slides, 40-80 palavras/slide, hook ≤15 palavras |
+| Bridge Macro→Setup | 4x | Opcional mas pontuado |
+| Tom e Voz | 3x | Analítico direto PT-BR, termos EN mantidos |
+| Consistência Visual | 3x | Dark mode, bold condensada, cores limitadas |
+| Caption | 2x | Hook ≤125 chars, 150-300 palavras, 5-15 hashtags |
+
+**Mínimo para publicação:** 80% do score total.
+
+## Seleção de pauta (pontuação)
+
+| Critério | Peso |
+|----------|------|
+| Impacto em forex/futuros | 5 |
+| Importância para audiência | 4 |
+| Timing | 4 |
+| Potencial de Bridge | 2 |
+| Viralização | 2 |
+
+**Mínimo:** 14/25 pontos para entrar em produção.
+
+## 12 Anti-patterns proibidos
+
+1. Hook genérico sem tensão (deve criar curiosidade em ≤15 palavras)
+2. Slides rasos com menos de 40 palavras
+3. Bridge ausente — macro sem conexão com setup acionável
+4. Promessas de retorno — viola CVM/ANBIMA
+5. Estética Canva stock — proibido templates genéricos
+6. Hashtag spam (30+) — usar 5-15: 3-5 fixas + 3-8 contextuais
+7. Caption sem CTA — sempre terminar com pergunta, salva ou compartilha
+8. Inconsistência visual entre slides (troca de background/accent)
+9. Fundo claro — backgrounds devem ser dark (`#0D1117` ou `#1A1B2E`)
+10. Jargão sem explicação — introduzir termos antes de usar abreviatura
+11. Frequência irregular — manter 3-4 posts/semana independente do calendário
+12. Copiar outros nichos — só referenciar contas macro (@economesteter, Hedgeye)
+
+## Conceito BRIDGE
+
+Fórmula que conecta notícia a trade acionável:
+
+```
+Evento Macro → Impacto no Ativo → Leitura Técnica → Setup Ativado
+```
+
+**Exemplo FOMC:** Fed sinaliza 3 cortes → Treasury yields caem, DXY enfraquece → XAU/USD liquidity sweep + order block + BOS → Setup long Gold ativado
+
+**Exemplo COPOM:** Selic +50bps → Diferencial BR-EUA alarga → Pressão vendedora no dólar → WDO sweep e reversão
+
+## 8 Templates HTML disponíveis
+
+| # | Nome | Uso ideal |
+|---|------|-----------|
+| 01 | Dark Tweet | Cover de impacto máximo — card preto, badge vermelho |
+| 02 | News Magazine | Contextualizar artigos jornalísticos reais |
+| 03 | Neon Data | Slides com muitos dados de mercado — neon cyan |
+| 04 | Minimal Clean | Narrativa textual e análise — muito espaço branco |
+| 05 | Breaking News | Notícias urgentes — glow vermelho, breaking bar pulsante |
+| 06 | Personal Brand | Últimos slides e CTA — foto full-bleed, pílula dourada |
+| 07 | Infographic | Comparações e rankings — tabela + gráfico de barras |
+| 08 | Meme Editorial | Reações virais — simulação browser com comentário irônico |
+
+**Fontes obrigatórias:** Anton (headlines, 96px máx), Inter (body, 20px mín). Nenhum texto abaixo de 20px.
+
+**Paletas por estilo:**
+- **Kaique Epic:** Amarelo `#FFD600`, Vermelho `#FF3B30`, Azul `#1D9BF0`, Verde `#00BA7C`
+- **InvisIA:** Roxo `#7C3AED` sobre preto `#000000`
+- **Padrão dark:** navy `#0D1117` ou charcoal `#1A1B2E` + branco + 1 accent (gold `#F59E0B` ou teal `#00D4AA`)
+
+## Estrutura alternada de slides
+
+Alternância obrigatória: **Epic Cover** (foto dark full-bleed) + **Tweet Card** (branco, profile header). Nunca 3 slides consecutivos do mesmo tipo.
+
+## Fontes de dados primárias
+
+- **EUA:** FOMC, NFP, CPI/PPI, PCE, ISM, GDP
+- **Brasil:** COPOM/Selic, IPCA, PIB, balança comercial
+- **Global:** BCE, BoJ, BoE, geopolítica, OPEC
+- **Ativos monitorados:** DXY, XAU/USD, S&P500, Nasdaq, WTI/Brent, EUR/USD, GBP/USD, USD/JPY, USD/BRL, WDO, WIN
 
 ## Fluxo de produção típico
 
