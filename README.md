@@ -1,6 +1,6 @@
 # Hero-Framework v2.3
 
-Setup completo e otimizado do Claude Code do Davi Medeiros. 916 commands, 373 agents, 233 skills, 28 hooks, 14 marketplaces, 2 squads de produção, Opensquad multi-agent orchestration, GSD meta-prompting, e muito mais.
+Setup completo e otimizado do Claude Code do Davi Medeiros. 937 commands, 354 agents, 220 skills, 28 hooks, 14 marketplaces, 2 squads de produção, Opensquad multi-agent orchestration, GSD meta-prompting, e muito mais.
 
 ## Quick Install
 
