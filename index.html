@@ -918,7 +918,7 @@
       <div class="hero-tag">
         <div class="hero-tag-line"></div>
         <div class="hero-tag-dot"></div>
-        skills &amp; framework — v2.0
+        skills &amp; framework — v2.3
       </div>
       <h1 class="hero-title">
         <span class="t1">HER</span><span class="t3">O</span><br/>
@@ -952,7 +952,7 @@
         <span class="stat-sub">348 instalados + 5 nativos</span>
       </div>
       <div class="stat-cell reveal">
-        <span class="stat-num" data-to="211">0</span>
+        <span class="stat-num" data-to="220">0</span>
         <span class="stat-label">Skills</span>
         <span class="stat-sub">por domínio</span>
       </div>
@@ -1028,7 +1028,7 @@
                 <div class="org-vline" style="height:28px;"></div>
                 <div class="org-sub">
                   <div class="org-sub-tag">skills</div>
-                  <div class="org-sub-val">211</div>
+                  <div class="org-sub-val">220</div>
                   <div class="org-sub-desc">módulos</div>
                 </div>
               </div>
@@ -1095,8 +1095,8 @@
       <div class="cap-card">
         <div class="cap-id">03 — SKL</div>
         <div class="cap-title">Skills Modulares</div>
-        <div class="cap-desc">211 módulos por domínio: marketing, desenvolvimento, auditoria, performance, infraestrutura e qualidade de código.</div>
-        <div class="cap-count">// 211 skills instaladas</div>
+        <div class="cap-desc">220 módulos por domínio: marketing, desenvolvimento, auditoria, performance, infraestrutura e qualidade de código.</div>
+        <div class="cap-count">// 220 skills instaladas</div>
       </div>
       <div class="cap-card">
         <div class="cap-id">04 — HK</div>
@@ -1107,7 +1107,7 @@
       <div class="cap-card">
         <div class="cap-id">05 — SQD</div>
         <div class="cap-title">Opensquad</div>
-        <div class="cap-desc">Orquestração multi-agente via pipelines. O Orquestrador monta squads com agentes sequenciais para tarefas complexas.</div>
+        <div class="cap-desc">Orquestração multi-agente via pipelines. 2 squads ativos: rubimfx-content e rubimfx-video. O Orquestrador monta squads com agentes sequenciais para tarefas complexas.</div>
         <div class="cap-count">// gerenciado pelo Orquestrador</div>
       </div>
       <div class="cap-card">
@@ -1147,7 +1147,7 @@
           <div class="t-row t-i1"><span class="t-file">security-auditor.md</span></div>
           <div class="t-row t-i1"><span class="t-file">ai-engineer.md &nbsp; +345</span></div>
           <div class="t-spacer"></div>
-          <div class="t-row"><span class="t-dir">skills/</span><span class="t-cnt">211 dirs</span></div>
+          <div class="t-row"><span class="t-dir">skills/</span><span class="t-cnt">220 dirs</span></div>
           <div class="t-row t-i1"><span class="t-file">SKILL.md &nbsp;(cada dir)</span></div>
           <div class="t-spacer"></div>
           <div class="t-row"><span class="t-dir">hooks/</span><span class="t-cnt">28 .js</span></div>
@@ -1183,7 +1183,7 @@
         <div class="bar-item">
           <div class="bar-header">
             <span class="bar-label">Skills</span>
-            <span class="bar-val">211</span>
+            <span class="bar-val">220</span>
           </div>
           <div class="bar-track"><div class="bar-fill" data-w="70"></div></div>
         </div>
@@ -1235,7 +1235,7 @@
           <div><span class="t-out">  ─────────────────────────</span></div>
           <div><span class="t-out">  [1/10] commands ....... 916</span></div>
           <div><span class="t-out">  [2/10] agents ......... 348</span></div>
-          <div><span class="t-out">  [3/10] skills ......... 211</span></div>
+          <div><span class="t-out">  [3/10] skills ......... 220</span></div>
           <div><span class="t-out">  [4/10] hooks ........... 28</span></div>
           <div><span class="t-out">  [5/10] settings ........ ok</span></div>
           <div><span class="t-out">  [6/10] mcp ............. ok</span></div>
@@ -1307,7 +1307,7 @@
       const map = {
         '[data-to="916"]':  s.commands,
         '[data-to="353"]':  s.agents_total,
-        '[data-to="211"]':  s.skills,
+        '[data-to="220"]':  s.skills,
         '[data-to="28"]':   s.hooks,
       };
       Object.entries(map).forEach(([sel, val]) => {
@@ -1330,7 +1330,7 @@
       document.querySelectorAll('.t-cnt').forEach(el => {
         if (el.textContent.includes('916')) el.textContent = s.commands + ' .md';
         if (el.textContent.includes('348')) el.textContent = s.agents_installed + ' .md';
-        if (el.textContent.includes('211')) el.textContent = s.skills + ' dirs';
+        if (el.textContent.includes('220')) el.textContent = s.skills + ' dirs';
         if (el.textContent.includes('28')) el.textContent = s.hooks + ' .js';
       });
 

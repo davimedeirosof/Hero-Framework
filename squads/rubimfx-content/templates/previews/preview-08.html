@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1080">
+<title>Template 08 — Meme Editorial</title>
+<style>
+  /* =========================================
+     CSS VARIABLES — edite aqui para customizar
+     ========================================= */
+  :root {
+    --bg-chrome:     #1C1C1E;
+    --bg-chrome-2:   #2C2C2E;
+    --bg-content:    #F2F2F7;
+    --bg-dark:       #000000;
+    --text-primary:  #FFFFFF;
+    --text-dark:     #1C1C1E;
+    --text-muted:    rgba(255,255,255,0.55);
+    --accent-yellow: #FFD60A;
+    --accent-red:    #FF453A;
+    --accent-blue:   #0A84FF;
+    --accent-green:  #30D158;
+    --border-chrome: rgba(255,255,255,0.1);
+    --border-light:  #D1D1D6;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    width: 1080px;
+    height: 1350px;
+    background: var(--bg-dark);
+    font-family: -apple-system, "Segoe UI", "SF Pro Display", "Helvetica Neue", Arial, sans-serif;
+    color: var(--text-primary);
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ── Phone/browser chrome top ── */
+  .chrome-top {
+    background: var(--bg-chrome);
+    padding: 14px 20px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex-shrink: 0;
+    border-bottom: 1px solid var(--border-chrome);
+  }
+
+  /* Status bar row */
+  .status-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 8px;
+  }
+
+  .status-time {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+
+  .status-icons {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .status-icon {
+    font-size: 20px;
+    opacity: 0.85;
+  }
+
+  /* URL bar row */
+  .url-bar {
+    background: var(--bg-chrome-2);
+    border-radius: 10px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    padding: 0 14px;
+    gap: 8px;
+  }
+
+  .url-lock {
+    font-size: 20px;
+    opacity: 0.6;
+  }
+
+  .url-text {
+    font-size: 22px;
+    color: rgba(255,255,255,0.7);
+    flex: 1;
+  }
+
+  .url-text .url-domain {
+    color: rgba(255,255,255,0.95);
+    font-weight: 600;
+  }
+
+  .url-share {
+    font-size: 22px;
+    opacity: 0.5;
+  }
+
+  /* Browser nav row */
+  .browser-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 8px;
+  }
+
+  .nav-btn {
+    font-size: 26px;
+    opacity: 0.5;
+  }
+
+  .nav-btn.active { opacity: 0.9; }
+
+  /* ── Main screenshot content area ── */
+  .screenshot-content {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* The "screenshot" of the article/post */
+  .article-screenshot {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .article-screenshot img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+  }
+
+  /* White article overlay (simulates web page) */
+  .article-page {
+    position: absolute;
+    inset: 0;
+    background: #FFFFFF;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Article page top bar */
+  .article-site-bar {
+    background: var(--bg-content);
+    padding: 12px 20px;
+    border-bottom: 1px solid var(--border-light);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+  }
+
+  .site-logo {
+    font-size: 26px;
+    font-weight: 900;
+    color: var(--accent-red);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  .site-section {
+    font-size: 22px;
+    color: #8E8E93;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 600;
+  }
+
+  .site-date {
+    margin-left: auto;
+    font-size: 22px;
+    color: #8E8E93;
+  }
+
+  /* Article content */
+  .article-inner {
+    flex: 1;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .article-inner img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+  }
+
+  /* ── Reaction overlay (the "meme" comment) ── */
+  .reaction-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 20;
+    background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.7) 30%, var(--bg-dark) 70%);
+    padding: 60px 24px 0;
+  }
+
+  /* Bold comment banner */
+  .comment-banner {
+    background: var(--accent-yellow);
+    border-radius: 8px 8px 0 0;
+    padding: 20px 28px;
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+  }
+
+  .comment-emoji {
+    font-size: 36px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .comment-text {
+    font-size: 34px;
+    font-weight: 900;
+    color: #000000;
+    line-height: 1.2;
+    letter-spacing: -0.3px;
+  }
+
+  /* ── Bottom section: reactions + profile ── */
+  .bottom-section {
+    background: var(--bg-dark);
+    padding: 0 24px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    flex-shrink: 0;
+  }
+
+  /* Reactions row */
+  .reactions-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .reaction-chip {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 100px;
+    padding: 8px 18px;
+    font-size: 24px;
+  }
+
+  .reaction-count {
+    font-size: 22px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.75);
+  }
+
+  .reactions-label {
+    margin-left: auto;
+    font-size: 20px;
+    color: rgba(255,255,255,0.35);
+  }
+
+  /* Comment simulation */
+  .comment-sim {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+
+  .comment-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.1);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    overflow: hidden;
+  }
+
+  .comment-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .comment-bubble {
+    background: rgba(255,255,255,0.07);
+    border-radius: 0 14px 14px 14px;
+    padding: 14px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .comment-user {
+    font-size: 22px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.85);
+  }
+
+  .comment-content {
+    font-size: 26px;
+    color: rgba(255,255,255,0.7);
+    line-height: 1.35;
+  }
+
+  /* Profile attribution row */
+  .attr-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-top: 8px;
+  }
+
+  .attr-pic {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1.5px solid rgba(255,255,255,0.2);
+    flex-shrink: 0;
+  }
+
+  .attr-name {
+    font-size: 24px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.85);
+  }
+
+  .attr-handle {
+    font-size: 20px;
+    color: rgba(255,255,255,0.4);
+    margin-top: 1px;
+  }
+
+  .attr-slide {
+    margin-left: auto;
+    font-size: 20px;
+    color: rgba(255,255,255,0.3);
+  }
+</style>
+</head>
+<body>
+
+<!-- Chrome top (browser simulation) -->
+<div class="chrome-top">
+  <!-- Status bar -->
+  <div class="status-bar">
+    <span class="status-time">14:37</span>
+    <div class="status-icons">
+      <span class="status-icon">●●●</span>
+      <span class="status-icon">▲</span>
+      <span class="status-icon">▮▮▮▮</span>
+    </div>
+  </div>
+  <!-- URL bar -->
+  <div class="url-bar">
+    <span class="url-lock">🔒</span>
+    <span class="url-text">
+      <span class="url-domain">Banco Central do Brasil</span>.com.br/noticias/16 mar 2026
+    </span>
+    <span class="url-share">⬆</span>
+  </div>
+  <!-- Browser nav -->
+  <div class="browser-nav">
+    <span class="nav-btn">‹</span>
+    <span class="nav-btn active">›</span>
+    <span class="nav-btn">⊕</span>
+    <span class="nav-btn">⊟</span>
+    <span class="nav-btn">⋯</span>
+  </div>
+</div>
+
+<!-- Screenshot content area -->
+<div class="screenshot-content">
+
+  <!-- Article page simulation -->
+  <div class="article-screenshot">
+    <div class="article-page">
+
+      <!-- Site top bar -->
+      <div class="article-site-bar">
+        <span class="site-logo">Banco Central do Brasil</span>
+        <span class="site-section">URGENTE</span>
+        <span class="site-date">16 mar 2026</span>
+      </div>
+
+      <!-- Article photo fills remaining space -->
+      <div class="article-inner">
+        <img src="profile-photo.jpeg" alt="Screenshot da matéria">
+      </div>
+
+    </div>
+
+    <!-- Reaction overlay (comment on the screenshot) -->
+    <div class="reaction-overlay">
+      <div class="comment-banner">
+        <span class="comment-emoji">🧵</span>
+        <span class="comment-text">Copom corta Selic pela primeira vez em 2026</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom section -->
+  <div class="bottom-section">
+
+    <!-- Reactions -->
+    <div class="reactions-row">
+      <div class="reaction-chip">😱 <span class="reaction-count">12K</span></div>
+      <div class="reaction-chip">🔥 <span class="reaction-count">8.4K</span></div>
+      <div class="reaction-chip">👀 <span class="reaction-count">21K</span></div>
+      <div class="reaction-chip">💬 <span class="reaction-count">3.2K</span></div>
+      <span class="reactions-label">847K</span>
+    </div>
+
+    <!-- Comment simulation -->
+    <div class="comment-sim">
+      <div class="comment-avatar">
+        <img src="profile-photo.jpeg" alt="rubimfx">
+      </div>
+      <div class="comment-bubble">
+        <span class="comment-user">@rubimfx</span>
+        <span class="comment-content">Taxa cai de 15% para 14,5%. Mercado reage.</span>
+      </div>
+    </div>
+
+    <!-- Profile attribution -->
+    <div class="attr-row">
+      <img class="attr-pic" src="profile-photo.jpeg" alt="rubimfx">
+      <div>
+        <div class="attr-name">@rubimfx</div>
+        <div class="attr-handle">16 mar 2026</div>
+      </div>
+      <span class="attr-slide">1</span>
+    </div>
+
+  </div>
+
+</div>
+
+</body>
+</html>

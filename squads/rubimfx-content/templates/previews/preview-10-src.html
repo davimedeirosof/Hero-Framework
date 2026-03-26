@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1080">
+<title>Preview 10 — Kaique Tweet Card</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+  :root {
+    --bg:            #FFFFFF;
+    --text-primary:  #0F1419;
+    --text-secondary:#536471;
+    --text-body:     #292F33;
+    --accent-blue:   #1D9BF0;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    width: 1080px;
+    height: 1350px;
+    background: var(--bg);
+    font-family: 'Inter', -apple-system, 'Segoe UI', sans-serif;
+    color: var(--text-primary);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .top-section {
+    flex: 0 0 auto;
+    padding: 40px 52px 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .profile-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 28px;
+  }
+
+  .profile-pic {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 900;
+    font-size: 24px;
+  }
+
+  .profile-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .profile-name {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+
+  .verified-badge {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+  }
+
+  .profile-handle {
+    font-size: 22px;
+    color: var(--text-secondary);
+    font-weight: 400;
+  }
+
+  .headline {
+    font-size: 56px;
+    font-weight: 900;
+    color: var(--text-primary);
+    line-height: 1.05;
+    letter-spacing: -1px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+
+  .headline .hl-blue { color: var(--accent-blue); }
+  .headline .hl-red  { color: #F4212E; }
+
+  .body-text {
+    font-size: 28px;
+    font-weight: 450;
+    color: var(--text-body);
+    line-height: 1.45;
+    letter-spacing: -0.2px;
+    margin-bottom: 8px;
+  }
+
+  .body-text strong {
+    font-weight: 800;
+    color: var(--text-primary);
+  }
+
+  .body-text .num {
+    font-weight: 800;
+    color: var(--accent-blue);
+  }
+
+  .bottom-section {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+    margin-top: 16px;
+    /* Simulated image with gradient */
+    background:
+      radial-gradient(ellipse 600px 400px at 50% 40%, rgba(29,155,240,0.3) 0%, transparent 70%),
+      radial-gradient(ellipse 400px 300px at 70% 60%, rgba(255,100,50,0.2) 0%, transparent 60%),
+      linear-gradient(180deg, #1a1a3e 0%, #0d1117 50%, #000 100%);
+  }
+
+  /* Grid lines effect */
+  .bottom-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(29,155,240,0.08) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(29,155,240,0.08) 1px, transparent 1px);
+    background-size: 60px 60px;
+    z-index: 1;
+  }
+
+  .bottom-section::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 120px;
+    background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.7) 100%);
+    z-index: 2;
+  }
+
+  /* Floating elements */
+  .float-element {
+    position: absolute;
+    z-index: 3;
+    border-radius: 12px;
+    padding: 16px 24px;
+    font-size: 22px;
+    font-weight: 700;
+    color: white;
+    backdrop-filter: blur(10px);
+  }
+
+  .float-1 {
+    top: 60px;
+    left: 60px;
+    background: rgba(29,155,240,0.2);
+    border: 1px solid rgba(29,155,240,0.4);
+  }
+
+  .float-2 {
+    top: 140px;
+    right: 80px;
+    background: rgba(244,33,46,0.2);
+    border: 1px solid rgba(244,33,46,0.4);
+    color: #FF6B6B;
+  }
+
+  .float-3 {
+    top: 240px;
+    left: 200px;
+    background: rgba(0,186,124,0.2);
+    border: 1px solid rgba(0,186,124,0.4);
+    color: #4ADE80;
+  }
+
+  .image-bottom-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    padding: 16px 52px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .cta-arrasta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 20px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.8);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+  }
+
+  .cta-arrows {
+    font-size: 22px;
+    color: #FFD600;
+    letter-spacing: 2px;
+  }
+
+  .handle {
+    font-size: 20px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.8);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+  }
+
+  .slide-dots {
+    position: absolute;
+    bottom: 52px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+
+  .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.35);
+  }
+
+  .dot.active {
+    background: #FFFFFF;
+    width: 10px;
+    height: 10px;
+  }
+</style>
+</head>
+<body>
+
+<div class="top-section">
+  <div class="profile-header">
+    <div class="profile-pic">R</div>
+    <div class="profile-info">
+      <div class="profile-name">
+        Gabriel Rubim
+        <svg class="verified-badge" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M20.396 11c-.018-.646-.215-1.275-.57-1.816-.354-.54-.852-.972-1.438-1.246.223-.607.27-1.264.14-1.897-.131-.634-.437-1.218-.882-1.687-.47-.445-1.053-.75-1.687-.882-.633-.13-1.29-.083-1.897.14-.273-.587-.704-1.086-1.245-1.44S11.647 1.62 11 1.604c-.646.017-1.273.213-1.813.568s-.969.854-1.24 1.44c-.608-.223-1.267-.272-1.902-.14-.635.13-1.22.436-1.69.882-.445.47-.749 1.055-.878 1.688-.13.633-.08 1.29.144 1.896-.587.274-1.087.705-1.443 1.245-.356.54-.555 1.17-.574 1.817.02.647.218 1.276.574 1.817.356.54.856.972 1.443 1.245-.224.606-.274 1.263-.144 1.896.13.634.433 1.218.877 1.688.47.443 1.054.747 1.687.878.633.132 1.29.084 1.897-.136.274.586.705 1.084 1.246 1.439.54.354 1.17.551 1.816.569.647-.016 1.276-.213 1.817-.567s.972-.854 1.245-1.44c.604.239 1.266.296 1.903.164.636-.132 1.22-.438 1.69-.882.445-.47.749-1.055.878-1.687.13-.633.08-1.29-.144-1.896.587-.274 1.087-.705 1.443-1.246.354-.54.553-1.17.57-1.817zm-6.081.414L9.24 16.8a.75.75 0 01-1.06 0l-2.52-2.52a.75.75 0 111.06-1.06l1.99 1.99 4.544-4.992a.75.75 0 011.103 1.014l-.002.002z" fill="#1D9BF0"/>
+        </svg>
+      </div>
+      <div class="profile-handle">@rubimfx</div>
+    </div>
+  </div>
+
+  <div class="headline">NÃO FOI CRISE. <span class="hl-red">FOI UM PLANO.</span></div>
+
+  <div class="body-text">
+    Em 17 de novembro de 2025, o Banco Central decretou a liquidação extrajudicial do Banco Master. No mesmo dia, Daniel Vorcaro, dono do banco, foi preso pela Polícia Federal. A instituição tinha <strong>R$ 4 milhões em caixa livre</strong>. Quatro. Milhões. Um banco que movimentava bilhões.
+  </div>
+</div>
+
+<div class="bottom-section">
+  <div class="float-element float-1">R$ 51,8 BI</div>
+  <div class="float-element float-2">1,6M CLIENTES</div>
+  <div class="float-element float-3">140% CDI</div>
+
+  <div class="image-bottom-bar">
+    <div class="cta-arrasta">
+      ARRASTA PRO LADO <span class="cta-arrows">&gt;&gt;&gt;</span>
+    </div>
+    <div class="handle">@RUBIMFX</div>
+  </div>
+
+  <div class="slide-dots">
+    <div class="dot"></div>
+    <div class="dot active"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1080">
+<title>Template 01 — Dark Tweet</title>
+<style>
+  /* =========================================
+     CSS VARIABLES — edite aqui para customizar
+     ========================================= */
+  :root {
+    --bg-primary:    #000000;
+    --bg-card:       #16181C;
+    --bg-glow-color: rgba(29, 155, 240, 0.14);
+    --border-card:   #2F3336;
+    --text-primary:  #E7E9EA;
+    --text-muted:    #71767B;
+    --accent-blue:   #1D9BF0;
+    --accent-red:    #F4212E;
+    --accent-green:  #00BA7C;
+    --badge-bg:      rgba(244, 33, 46, 0.15);
+    --badge-border:  rgba(244, 33, 46, 0.5);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    width: 1080px;
+    height: 1350px;
+    background: var(--bg-primary);
+    font-family: -apple-system, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    color: var(--text-primary);
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Ambient glow */
+  .bg-glow {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 700px 400px at 50% 25%, var(--bg-glow-color) 0%, transparent 65%),
+      var(--bg-primary);
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  /* ── TOP HALF: Tweet card área ── */
+  .top-half {
+    position: relative;
+    z-index: 10;
+    flex: 0 0 auto;
+    padding: 36px 56px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  /* Header: ← Post */
+  .post-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 28px;
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  .post-header svg {
+    color: var(--text-primary);
+  }
+
+  /* Profile row */
+  .profile-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .profile-pic {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--accent-blue);
+    flex-shrink: 0;
+  }
+
+  .profile-info {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    flex: 1;
+  }
+
+  .profile-name {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+
+  .verified {
+    width: 21px;
+    height: 21px;
+    flex-shrink: 0;
+  }
+
+  .profile-handle {
+    font-size: 24px;
+    color: var(--text-muted);
+  }
+
+  .follow-btn {
+    border: 1.5px solid var(--text-primary);
+    border-radius: 100px;
+    padding: 10px 28px;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: 0.1px;
+  }
+
+  /* Alert badge */
+  .alert-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--badge-bg);
+    border: 1.5px solid var(--badge-border);
+    border-radius: 100px;
+    padding: 10px 28px;
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--accent-red);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    width: fit-content;
+  }
+
+  .badge-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent-red);
+    flex-shrink: 0;
+    animation: none;
+  }
+
+  /* Main tweet card */
+  .tweet-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-card);
+    border-radius: 20px;
+    padding: 34px 42px 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .tweet-headline {
+    font-size: 64px;
+    font-weight: 900;
+    color: var(--text-primary);
+    line-height: 1.08;
+    letter-spacing: -1.5px;
+  }
+
+  .tweet-headline .hl-blue  { color: var(--accent-blue); }
+  .tweet-headline .hl-red   { color: var(--accent-red); }
+  .tweet-headline .hl-green { color: var(--accent-green); }
+
+  .tweet-body {
+    font-size: 34px;
+    font-weight: 500;
+    color: var(--text-primary);
+    line-height: 1.4;
+    letter-spacing: -0.2px;
+  }
+
+  .tweet-body .hl-blue  { color: var(--accent-blue);  font-weight: 700; }
+  .tweet-body .hl-red   { color: var(--accent-red);   font-weight: 800; }
+  .tweet-body .hl-bold  { font-weight: 800; }
+
+  .tweet-meta {
+    margin-top: 6px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border-card);
+    display: flex;
+    align-items: center;
+    gap: 22px;
+  }
+
+  .meta-time   { font-size: 22px; color: var(--text-muted); }
+  .meta-views  { font-size: 22px; color: var(--text-muted); }
+  .meta-views span { color: var(--text-primary); font-weight: 700; }
+
+  /* Engagement row */
+  .engagement-row {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    padding-top: 14px;
+    border-top: 1px solid var(--border-card);
+  }
+
+  .eng-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 22px;
+    color: var(--text-muted);
+  }
+
+  .eng-item svg {
+    width: 24px;
+    height: 24px;
+    opacity: 0.7;
+  }
+
+  /* ── BOTTOM HALF: Photo collage ── */
+  .bottom-half {
+    position: relative;
+    z-index: 10;
+    flex: 1;
+    display: flex;
+    overflow: hidden;
+  }
+
+  .photo-left {
+    width: 60%;
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .photo-left img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+  }
+
+  .photo-left::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.05) 40%, rgba(0,0,0,0.65) 100%);
+  }
+
+  .photo-divider {
+    width: 3px;
+    background: var(--bg-primary);
+    flex-shrink: 0;
+    z-index: 5;
+  }
+
+  .photo-right {
+    width: 40%;
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .photo-right img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
+    display: block;
+  }
+
+  .photo-right::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.05) 40%, rgba(0,0,0,0.65) 100%);
+  }
+
+  /* Stats bar sobreposta às fotos */
+  .stats-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 20;
+    background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.82) 35%, rgba(0,0,0,0.97) 100%);
+    padding: 52px 56px 40px;
+    display: flex;
+    align-items: center;
+  }
+
+  .stat-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .stat-value {
+    font-size: 52px;
+    font-weight: 900;
+    letter-spacing: -0.5px;
+  }
+
+  .stat-value.red   { color: var(--accent-red); }
+  .stat-value.blue  { color: var(--accent-blue); }
+  .stat-value.green { color: var(--accent-green); }
+
+  .stat-label {
+    font-size: 22px;
+    font-weight: 500;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    text-align: center;
+  }
+
+  .stat-sep {
+    width: 1px;
+    height: 48px;
+    background: var(--border-card);
+    margin: 0 32px;
+  }
+
+  /* Caption labels sobre as fotos */
+  .photo-caption {
+    position: absolute;
+    bottom: 96px;
+    left: 16px;
+    z-index: 25;
+    background: rgba(0,0,0,0.72);
+    border: 1px solid rgba(255,255,255,0.14);
+    border-radius: 8px;
+    padding: 8px 18px;
+    font-size: 22px;
+    font-weight: 600;
+    color: rgba(231,233,234,0.92);
+    letter-spacing: 0.5px;
+  }
+</style>
+</head>
+<body>
+
+<div class="bg-glow"></div>
+
+<!-- TOP HALF: Tweet card -->
+<div class="top-half">
+
+  <!-- Header row: ← Post -->
+  <div class="post-header">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+      <path d="M19 12H5M12 5l-7 7 7 7"/>
+    </svg>
+    Post
+  </div>
+
+  <!-- Profile row -->
+  <div class="profile-row">
+    <img class="profile-pic" src="profile-photo.jpeg" alt="rubimfx">
+    <div class="profile-info">
+      <div class="profile-name">
+        rubimfx
+        <!-- Verified badge SVG -->
+        <svg class="verified" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M20.396 11c-.018-.646-.215-1.275-.57-1.816-.354-.54-.852-.972-1.438-1.246.223-.607.27-1.264.14-1.897-.131-.634-.437-1.218-.882-1.687-.47-.445-1.053-.75-1.687-.882-.633-.13-1.29-.083-1.897.14-.273-.587-.704-1.086-1.245-1.44S11.647 1.62 11 1.604c-.646.017-1.273.213-1.813.568s-.969.854-1.24 1.44c-.608-.223-1.267-.272-1.902-.14-.635.13-1.22.436-1.69.882-.445.47-.749 1.055-.878 1.688-.13.633-.08 1.29.144 1.896-.587.274-1.087.705-1.443 1.245-.356.54-.555 1.17-.574 1.817.02.647.218 1.276.574 1.817.356.54.856.972 1.443 1.245-.224.606-.274 1.263-.144 1.896.13.634.433 1.218.877 1.688.47.443 1.054.747 1.687.878.633.132 1.29.084 1.897-.136.274.586.705 1.084 1.246 1.439.54.354 1.17.551 1.816.569.647-.016 1.276-.213 1.817-.567s.972-.854 1.245-1.44c.604.239 1.266.296 1.903.164.636-.132 1.22-.438 1.69-.882.445-.47.749-1.055.878-1.687.13-.633.08-1.29-.144-1.896.587-.274 1.087-.705 1.443-1.246.354-.54.553-1.17.57-1.817zm-6.081.414L9.24 16.8a.75.75 0 01-1.06 0l-2.52-2.52a.75.75 0 111.06-1.06l1.99 1.99 4.544-4.992a.75.75 0 011.103 1.014l-.002.002z" fill="#1D9BF0"/>
+        </svg>
+      </div>
+      <div class="profile-handle">@rubimfx · 16 mar 2026</div>
+    </div>
+    <div class="follow-btn">Seguir</div>
+  </div>
+
+  <!-- Alert badge -->
+  <div class="alert-badge">
+    <span class="badge-dot"></span>
+    URGENTE
+  </div>
+
+  <!-- Main tweet card -->
+  <div class="tweet-card">
+    <div class="tweet-headline">Copom corta Selic pela primeira vez em 2026</div>
+    <div class="tweet-body">Taxa cai de 15% para 14,5%. Mercado reage.</div>
+    <div class="tweet-meta">
+      <span class="meta-time">18:32</span>
+      <span class="meta-views"><span>847K</span></span>
+    </div>
+    <!-- Engagement row -->
+    <div class="engagement-row">
+      <!-- Reply icon -->
+      <div class="eng-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
+        </svg>
+        1.2K
+      </div>
+      <!-- Retweet icon -->
+      <div class="eng-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <path d="M17 1l4 4-4 4M3 11V9a4 4 0 014-4h14M7 23l-4-4 4-4M21 13v2a4 4 0 01-4 4H3"/>
+        </svg>
+        4.7K
+      </div>
+      <!-- Heart icon -->
+      <div class="eng-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/>
+        </svg>
+        18.3K
+      </div>
+      <!-- Bookmark icon -->
+      <div class="eng-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/>
+        </svg>
+        9.1K
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- BOTTOM HALF: Photo collage + stats -->
+<div class="bottom-half">
+
+  <div class="photo-left">
+    <img src="profile-photo.jpeg" alt="Foto principal">
+    <div class="photo-caption">Nova Selic</div>
+  </div>
+
+  <div class="photo-divider"></div>
+
+  <div class="photo-right">
+    <img src="profile-photo.jpeg" alt="Foto secundária">
+  </div>
+
+  <!-- Stats bar sobreposta -->
+  <div class="stats-bar">
+    <div class="stat-item">
+      <div class="stat-value red">14,5%</div>
+      <div class="stat-label">Nova Selic</div>
+    </div>
+    <div class="stat-sep"></div>
+    <div class="stat-item">
+      <div class="stat-value blue">-0,50 p.p.</div>
+      <div class="stat-label">Corte</div>
+    </div>
+    <div class="stat-sep"></div>
+    <div class="stat-item">
+      <div class="stat-value green">Unânime</div>
+      <div class="stat-label">Decisão</div>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>

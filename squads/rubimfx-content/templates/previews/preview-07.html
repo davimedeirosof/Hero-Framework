@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1080">
+<title>Template 07 — Infographic</title>
+<style>
+  /* =========================================
+     CSS VARIABLES — edite aqui para customizar
+     ========================================= */
+  :root {
+    --bg:            #F0F2F5;
+    --bg-white:      #FFFFFF;
+    --bg-dark:       #0F1419;
+    --text-dark:     #0F1419;
+    --text-body:     #2D3748;
+    --text-muted:    #6B7280;
+    --text-light:    #FFFFFF;
+    --color-green:   #059669;
+    --color-red:     #DC2626;
+    --color-blue:    #2563EB;
+    --color-purple:  #7C3AED;
+    --color-orange:  #D97706;
+    --bg-green:      rgba(5, 150, 105, 0.08);
+    --bg-red:        rgba(220, 38, 38, 0.08);
+    --bg-blue:       rgba(37, 99, 235, 0.08);
+    --border-green:  rgba(5, 150, 105, 0.25);
+    --border-red:    rgba(220, 38, 38, 0.25);
+    --border-blue:   rgba(37, 99, 235, 0.25);
+    --border-light:  #E5E7EB;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    width: 1080px;
+    height: 1350px;
+    background: var(--bg);
+    font-family: -apple-system, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    color: var(--text-dark);
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ── Header band ── */
+  .header-band {
+    background: var(--bg-dark);
+    padding: 20px 52px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-shrink: 0;
+  }
+
+  .header-profile {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid rgba(255,255,255,0.3);
+    flex-shrink: 0;
+  }
+
+  .header-name {
+    font-size: 26px;
+    font-weight: 800;
+    color: #FFFFFF;
+  }
+
+  .header-subtitle {
+    font-size: 20px;
+    color: rgba(255,255,255,0.5);
+    margin-top: 1px;
+  }
+
+  .header-badge {
+    margin-left: auto;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 100px;
+    padding: 8px 20px;
+    font-size: 20px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.7);
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+  }
+
+  /* ── Title section ── */
+  .title-section {
+    background: var(--bg-white);
+    padding: 28px 52px 24px;
+    border-bottom: 1px solid var(--border-light);
+    flex-shrink: 0;
+  }
+
+  .title-eyebrow {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--color-blue);
+    letter-spacing: 2.2px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .title-main {
+    font-size: 64px;
+    font-weight: 900;
+    color: var(--text-dark);
+    line-height: 1.02;
+    letter-spacing: -1.5px;
+    margin-bottom: 10px;
+  }
+
+  .title-sub {
+    font-size: 30px;
+    color: var(--text-muted);
+    line-height: 1.35;
+  }
+
+  /* ── Hero stat bar ── */
+  .hero-stat-bar {
+    display: flex;
+    background: var(--bg-white);
+    border-bottom: 3px solid var(--color-blue);
+    flex-shrink: 0;
+  }
+
+  .hero-stat {
+    flex: 1;
+    padding: 24px 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    border-right: 1px solid var(--border-light);
+  }
+
+  .hero-stat:last-child { border-right: none; }
+
+  .hs-value {
+    font-size: 56px;
+    font-weight: 900;
+    letter-spacing: -1px;
+    line-height: 1;
+  }
+
+  .hs-value.blue   { color: var(--color-blue); }
+  .hs-value.green  { color: var(--color-green); }
+  .hs-value.red    { color: var(--color-red); }
+  .hs-value.purple { color: var(--color-purple); }
+
+  .hs-label {
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.9px;
+  }
+
+  /* ── Main content area ── */
+  .main-area {
+    flex: 1;
+    padding: 24px 52px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  /* Section title */
+  .section-title {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--text-muted);
+    letter-spacing: 1.8px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  /* Comparison table */
+  .compare-table {
+    background: var(--bg-white);
+    border-radius: 16px;
+    border: 1px solid var(--border-light);
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+
+  .compare-header {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    background: var(--bg-dark);
+    padding: 14px 24px;
+  }
+
+  .compare-header-cell {
+    font-size: 20px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.6);
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+  }
+
+  .compare-header-cell:not(:first-child) { text-align: center; }
+
+  .compare-row {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    padding: 16px 24px;
+    border-bottom: 1px solid var(--border-light);
+    align-items: center;
+  }
+
+  .compare-row:last-child { border-bottom: none; }
+  .compare-row:nth-child(even) { background: rgba(37,99,235,0.025); }
+
+  .cr-label {
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--text-dark);
+  }
+
+  .cr-label .cr-sub {
+    font-size: 20px;
+    font-weight: 400;
+    color: var(--text-muted);
+    display: block;
+    margin-top: 2px;
+  }
+
+  .cr-before {
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--color-red);
+    text-align: center;
+  }
+
+  .cr-after {
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--color-green);
+    text-align: center;
+  }
+
+  /* Bar chart section */
+  .bar-chart {
+    background: var(--bg-white);
+    border-radius: 16px;
+    border: 1px solid var(--border-light);
+    padding: 22px 28px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .bar-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .bar-label {
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--text-dark);
+    width: 240px;
+    flex-shrink: 0;
+  }
+
+  .bar-track {
+    flex: 1;
+    height: 36px;
+    background: #F3F4F6;
+    border-radius: 6px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .bar-fill {
+    height: 100%;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    padding-right: 10px;
+    justify-content: flex-end;
+  }
+
+  .bar-fill.green  { background: linear-gradient(90deg, rgba(5,150,105,0.15), var(--color-green)); }
+  .bar-fill.red    { background: linear-gradient(90deg, rgba(220,38,38,0.15), var(--color-red)); }
+  .bar-fill.blue   { background: linear-gradient(90deg, rgba(37,99,235,0.15), var(--color-blue)); }
+  .bar-fill.orange { background: linear-gradient(90deg, rgba(217,119,6,0.15), var(--color-orange)); }
+
+  .bar-value {
+    font-size: 20px;
+    font-weight: 800;
+    color: #FFFFFF;
+  }
+
+  /* ── Footer ── */
+  .footer {
+    background: var(--bg-white);
+    border-top: 1px solid var(--border-light);
+    padding: 16px 52px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+  }
+
+  .footer-source {
+    font-size: 20px;
+    color: var(--text-muted);
+  }
+
+  .footer-source strong {
+    color: var(--text-dark);
+    font-weight: 700;
+  }
+
+  .footer-slide {
+    margin-left: auto;
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--text-muted);
+  }
+</style>
+</head>
+<body>
+
+<!-- Header band -->
+<div class="header-band">
+  <img class="header-profile" src="profile-photo.jpeg" alt="rubimfx">
+  <div>
+    <div class="header-name">@rubimfx</div>
+    <div class="header-subtitle">Análise de dados · Trading</div>
+  </div>
+  <div class="header-badge">Banco Central do Brasil</div>
+</div>
+
+<!-- Title section -->
+<div class="title-section">
+  <div class="title-eyebrow">URGENTE</div>
+  <div class="title-main">Copom corta Selic pela primeira vez em 2026</div>
+  <div class="title-sub">Taxa cai de 15% para 14,5%. Mercado reage.</div>
+</div>
+
+<!-- Hero stat bar -->
+<div class="hero-stat-bar">
+  <div class="hero-stat">
+    <div class="hs-value blue">14,5%</div>
+    <div class="hs-label">Nova Selic</div>
+  </div>
+  <div class="hero-stat">
+    <div class="hs-value green">-0,50 p.p.</div>
+    <div class="hs-label">Corte</div>
+  </div>
+  <div class="hero-stat">
+    <div class="hs-value red">Unânime</div>
+    <div class="hs-label">Decisão</div>
+  </div>
+  <div class="hero-stat">
+    <div class="hs-value purple">14,5%</div>
+    <div class="hs-label">Nova taxa Selic após corte de 0,50 p.p.</div>
+  </div>
+</div>
+
+<!-- Main area -->
+<div class="main-area">
+
+  <!-- Comparison table -->
+  <div class="section-title">Comparativo: antes × depois</div>
+
+  <div class="compare-table">
+    <div class="compare-header">
+      <div class="compare-header-cell">Item</div>
+      <div class="compare-header-cell">Antes</div>
+      <div class="compare-header-cell">Depois</div>
+    </div>
+    <div class="compare-row">
+      <div class="cr-label">BC confirma corte da Selic em março e sinaliza continuidade<span class="cr-sub">Comitê destaca melhora na inflação e redução de riscos externos</span></div>
+      <div class="cr-before">14,5%</div>
+      <div class="cr-after">-0,50 p.p.</div>
+    </div>
+    <div class="compare-row">
+      <div class="cr-label">O Banco Central cortou a taxa Selic em 0,50 ponto percentual, de 15% para 14,5% ao ano. É o primeiro corte desde o ciclo de alta que começou em 2024.<span class="cr-sub">Impacto direto</span></div>
+      <div class="cr-before">Unânime</div>
+      <div class="cr-after">14,5%</div>
+    </div>
+    <div class="compare-row">
+      <div class="cr-label">Custo ao contribuinte<span class="cr-sub">Estimativa anual</span></div>
+      <div class="cr-before">-0,50 p.p.</div>
+      <div class="cr-after">Unânime</div>
+    </div>
+  </div>
+
+  <!-- Bar chart -->
+  <div class="section-title">Distribuição</div>
+
+  <div class="bar-chart">
+    <div class="bar-row">
+      <span class="bar-label">Nova Selic</span>
+      <div class="bar-track">
+        <div class="bar-fill green" style="width:78%">
+          <span class="bar-value">14,5%</span>
+        </div>
+      </div>
+    </div>
+    <div class="bar-row">
+      <span class="bar-label">Corte</span>
+      <div class="bar-track">
+        <div class="bar-fill red" style="width:54%">
+          <span class="bar-value">-0,50 p.p.</span>
+        </div>
+      </div>
+    </div>
+    <div class="bar-row">
+      <span class="bar-label">Decisão</span>
+      <div class="bar-track">
+        <div class="bar-fill blue" style="width:91%">
+          <span class="bar-value">Unânime</span>
+        </div>
+      </div>
+    </div>
+    <div class="bar-row">
+      <span class="bar-label">Nova taxa Selic após corte de 0,50 p.p.</span>
+      <div class="bar-track">
+        <div class="bar-fill orange" style="width:38%">
+          <span class="bar-value">14,5%</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Footer -->
+<div class="footer">
+  <span class="footer-source">Fonte: <strong>Banco Central do Brasil</strong> · 16 mar 2026</span>
+  <span class="footer-slide">1</span>
+</div>
+
+</body>
+</html>

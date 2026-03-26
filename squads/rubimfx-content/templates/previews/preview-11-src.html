@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1080">
+<title>Preview 11 — Hollyfield News Card</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+  :root {
+    --bg-dark:       #0a0a0a;
+    --bg-header:     rgba(10,10,10,0.85);
+    --text-white:    #FFFFFF;
+    --text-muted:    rgba(255,255,255,0.6);
+    --accent-orange: #FF6B00;
+    --border-subtle: rgba(255,255,255,0.08);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    width: 1080px;
+    height: 1350px;
+    background: var(--bg-dark);
+    font-family: 'Inter', -apple-system, sans-serif;
+    color: var(--text-white);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .header-bar {
+    flex: 0 0 auto;
+    background: var(--bg-header);
+    border-bottom: 1px solid var(--border-subtle);
+    padding: 14px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 20;
+  }
+
+  .header-handle { font-size: 20px; font-weight: 600; color: var(--text-muted); }
+  .header-category { font-size: 20px; font-weight: 500; color: var(--text-muted); font-style: italic; }
+  .header-right { display: flex; align-items: center; gap: 14px; }
+  .header-copyright { font-size: 18px; font-weight: 400; color: var(--text-muted); }
+  .header-logo {
+    width: 44px; height: 44px; border-radius: 50%;
+    background: var(--accent-orange);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px; font-weight: 900; color: white;
+  }
+
+  .photo-area {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+    /* Simulated person photo */
+    background:
+      radial-gradient(ellipse 500px 600px at 50% 35%, #2a2040 0%, transparent 70%),
+      radial-gradient(ellipse 400px 400px at 40% 40%, #1a3050 0%, transparent 60%),
+      linear-gradient(180deg, #1a1a2e 0%, #16213e 40%, #0f3460 70%, #0a0a0a 100%);
+  }
+
+  /* Simulated face silhouette */
+  .face-sim {
+    position: absolute;
+    top: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 500px;
+    height: 650px;
+    border-radius: 50% 50% 45% 45%;
+    background:
+      radial-gradient(ellipse 300px 350px at 50% 45%, rgba(180,160,140,0.35) 0%, transparent 70%),
+      radial-gradient(ellipse 200px 80px at 50% 30%, rgba(200,180,160,0.2) 0%, transparent 50%);
+    opacity: 0.7;
+  }
+
+  /* Company label */
+  .company-badge {
+    position: absolute;
+    top: 30px;
+    right: 40px;
+    z-index: 10;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--text-white);
+    letter-spacing: 1px;
+    backdrop-filter: blur(10px);
+  }
+
+  .photo-area::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 55%;
+    background: linear-gradient(180deg,
+      transparent 0%,
+      rgba(10,10,10,0.3) 30%,
+      rgba(10,10,10,0.75) 60%,
+      rgba(10,10,10,0.95) 85%,
+      var(--bg-dark) 100%
+    );
+    pointer-events: none;
+  }
+
+  .text-area {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    z-index: 10;
+    padding: 0 48px 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .brand-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .brand-icon {
+    width: 40px; height: 40px; border-radius: 50%;
+    background: var(--accent-orange);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    font-size: 20px; font-weight: 900; color: white;
+  }
+
+  .brand-info { display: flex; flex-direction: column; gap: 1px; }
+
+  .brand-name {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 22px; font-weight: 700; color: var(--text-white);
+  }
+
+  .brand-verified { width: 18px; height: 18px; }
+
+  .brand-handle-small {
+    font-size: 18px; font-weight: 400; color: var(--text-muted);
+  }
+
+  .headline {
+    font-family: 'Inter', sans-serif;
+    font-size: 42px;
+    font-weight: 800;
+    color: var(--text-white);
+    line-height: 1.15;
+    letter-spacing: -0.5px;
+  }
+
+  .cta-text {
+    font-size: 22px;
+    font-weight: 500;
+    color: var(--text-muted);
+  }
+</style>
+</head>
+<body>
+
+<div class="header-bar">
+  <div class="header-handle">@rubimfx</div>
+  <div class="header-category">Mercado &amp; IA</div>
+  <div class="header-right">
+    <div class="header-copyright">Copyright &copy; 2026</div>
+    <div class="header-logo">R</div>
+  </div>
+</div>
+
+<div class="photo-area">
+  <div class="face-sim"></div>
+  <div class="company-badge">OPENAI</div>
+
+  <div class="text-area">
+    <div class="brand-row">
+      <div class="brand-icon">R</div>
+      <div class="brand-info">
+        <div class="brand-name">
+          RubimFX
+          <svg class="brand-verified" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M20.396 11c-.018-.646-.215-1.275-.57-1.816-.354-.54-.852-.972-1.438-1.246.223-.607.27-1.264.14-1.897-.131-.634-.437-1.218-.882-1.687-.47-.445-1.053-.75-1.687-.882-.633-.13-1.29-.083-1.897.14-.273-.587-.704-1.086-1.245-1.44S11.647 1.62 11 1.604c-.646.017-1.273.213-1.813.568s-.969.854-1.24 1.44c-.608-.223-1.267-.272-1.902-.14-.635.13-1.22.436-1.69.882-.445.47-.749 1.055-.878 1.688-.13.633-.08 1.29.144 1.896-.587.274-1.087.705-1.443 1.245-.356.54-.555 1.17-.574 1.817.02.647.218 1.276.574 1.817.356.54.856.972 1.443 1.245-.224.606-.274 1.263-.144 1.896.13.634.433 1.218.877 1.688.47.443 1.054.747 1.687.878.633.132 1.29.084 1.897-.136.274.586.705 1.084 1.246 1.439.54.354 1.17.551 1.816.569.647-.016 1.276-.213 1.817-.567s.972-.854 1.245-1.44c.604.239 1.266.296 1.903.164.636-.132 1.22-.438 1.69-.882.445-.47.749-1.055.878-1.687.13-.633.08-1.29-.144-1.896.587-.274 1.087-.705 1.443-1.246.354-.54.553-1.17.57-1.817zm-6.081.414L9.24 16.8a.75.75 0 01-1.06 0l-2.52-2.52a.75.75 0 111.06-1.06l1.99 1.99 4.544-4.992a.75.75 0 011.103 1.014l-.002.002z" fill="#1D9BF0"/>
+          </svg>
+        </div>
+        <div class="brand-handle-small">@rubimfx</div>
+      </div>
+    </div>
+
+    <div class="headline">OpenAI lança GPT-5.4 e resultados já impressionam em 4 dias de uso.</div>
+
+    <div class="cta-text">Deslize para mais.</div>
+  </div>
+</div>
+
+</body>
+</html>

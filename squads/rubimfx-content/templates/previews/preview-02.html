@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1080">
+<title>Template 02 — News Magazine</title>
+<style>
+  /* =========================================
+     CSS VARIABLES — edite aqui para customizar
+     ========================================= */
+  :root {
+    --bg-primary:   #F4F4F4;
+    --bg-white:     #FFFFFF;
+    --bg-dark:      #0F1419;
+    --text-primary: #0F1419;
+    --text-body:    #2D3748;
+    --text-muted:   #718096;
+    --text-light:   #FFFFFF;
+    --accent-red:   #CC0000;
+    --accent-blue:  #1A56DB;
+    --accent-gold:  #B7860B;
+    --border-light: #E2E8F0;
+    --source-bg:    #0F1419;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    width: 1080px;
+    height: 1350px;
+    background: var(--bg-primary);
+    font-family: Georgia, "Times New Roman", "Playfair Display", serif;
+    color: var(--text-primary);
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ── Masthead — top bar ── */
+  .masthead {
+    background: var(--bg-dark);
+    height: 68px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 52px;
+    flex-shrink: 0;
+  }
+
+  .masthead-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .logo-profile {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1.5px solid rgba(255,255,255,0.3);
+  }
+
+  .logo-name {
+    font-family: -apple-system, "Segoe UI", Arial, sans-serif;
+    font-size: 28px;
+    font-weight: 800;
+    color: #FFFFFF;
+    letter-spacing: 0.5px;
+  }
+
+  .masthead-date {
+    font-family: -apple-system, "Segoe UI", Arial, sans-serif;
+    font-size: 22px;
+    color: rgba(255,255,255,0.5);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+  }
+
+  /* ── Hero photo area ── */
+  .hero-photo {
+    width: 100%;
+    height: 480px;
+    overflow: hidden;
+    position: relative;
+    flex-shrink: 0;
+  }
+
+  .hero-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 20%;
+    display: block;
+  }
+
+  /* Gradient overlay no hero */
+  .hero-photo::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      180deg,
+      transparent 40%,
+      rgba(15,20,25,0.5) 75%,
+      rgba(15,20,25,0.9) 100%
+    );
+  }
+
+  /* Category tag sobre o hero */
+  .hero-category {
+    position: absolute;
+    top: 24px;
+    left: 52px;
+    z-index: 5;
+    background: var(--accent-red);
+    color: #FFFFFF;
+    font-family: -apple-system, "Segoe UI", Arial, sans-serif;
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: 2.2px;
+    text-transform: uppercase;
+    padding: 8px 22px;
+    border-radius: 4px;
+  }
+
+  /* Caption sobre o hero */
+  .hero-caption {
+    position: absolute;
+    bottom: 20px;
+    right: 24px;
+    z-index: 5;
+    font-family: -apple-system, "Segoe UI", Arial, sans-serif;
+    font-size: 20px;
+    color: rgba(255,255,255,0.65);
+    font-style: italic;
+  }
+
+  /* ── Source badge ── */
+  .source-bar {
+    background: var(--bg-white);
+    padding: 18px 52px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    border-bottom: 3px solid var(--accent-red);
+    flex-shrink: 0;
+  }
+
+  .source-name {
+    font-family: -apple-system, "Segoe UI", Arial, sans-serif;
+    font-size: 22px;
+    font-weight: 900;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  .source-sep {
+    width: 1px;
+    height: 18px;
+    background: var(--border-light);
+  }
+
+  .source-byline {
+    font-family: -apple-system, "Segoe UI", Arial, sans-serif;
+    font-size: 22px;
+    color: var(--text-muted);
+  }
+
+  .source-date {
+    margin-left: auto;
+    font-family: -apple-system, "Segoe UI", Arial, sans-serif;
+    font-size: 22px;
+    color: var(--text-muted);
+  }
+
+  /* ── Editorial body ── */
+  .editorial-body {
+    flex: 1;
+    padding: 36px 52px 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    background: var(--bg-white);
+  }
+
+  /* Red accent rule */
+  .accent-rule {
+    width: 56px;
+    height: 4px;
+    background: var(--accent-red);
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+
+  .article-headline {
+    font-size: 68px;
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.05;
+    letter-spacing: -1.5px;
+    font-family: Georgia, "Times New Roman", serif;
+  }
+
+  .article-headline .hl-red  { color: var(--accent-red); }
+  .article-headline .hl-blue { color: var(--accent-blue); }
+
+  .article-deck {
+    font-size: 36px;
+    font-weight: 400;
+    color: var(--text-body);
+    line-height: 1.4;
+    font-family: Georgia, serif;
+    font-style: italic;
+    border-left: 4px solid var(--accent-red);
+    padding-left: 24px;
+  }
+
+  .article-body-text {
+    font-family: -apple-system, "Segoe UI", Arial, sans-serif;
+    font-size: 30px;
+    color: var(--text-body);
+    line-height: 1.55;
+    flex: 1;
+  }
+
+  /* Stats row dentro do corpo */
+  .stats-row {
+    display: flex;
+    gap: 0;
+    border: 1.5px solid var(--border-light);
+    border-radius: 12px;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+
+  .stats-cell {
+    flex: 1;
+    padding: 22px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    align-items: center;
+    text-align: center;
+    background: var(--bg-white);
+    border-right: 1.5px solid var(--border-light);
+  }
+
+  .stats-cell:last-child { border-right: none; }
+
+  .stats-cell-value {
+    font-family: -apple-system, "Segoe UI", Arial, sans-serif;
+    font-size: 52px;
+    font-weight: 900;
+    color: var(--accent-red);
+    letter-spacing: -0.5px;
+  }
+
+  .stats-cell-label {
+    font-family: -apple-system, "Segoe UI", Arial, sans-serif;
+    font-size: 22px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 600;
+  }
+
+  /* Footer bar */
+  .footer-bar {
+    background: var(--bg-dark);
+    padding: 16px 52px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+  }
+
+  .footer-profile {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1.5px solid rgba(255,255,255,0.3);
+  }
+
+  .footer-text {
+    font-family: -apple-system, "Segoe UI", Arial, sans-serif;
+    font-size: 22px;
+    color: rgba(255,255,255,0.6);
+  }
+
+  .footer-text strong {
+    color: #FFFFFF;
+    font-weight: 700;
+  }
+
+  .footer-slide {
+    margin-left: auto;
+    font-family: -apple-system, "Segoe UI", Arial, sans-serif;
+    font-size: 22px;
+    color: rgba(255,255,255,0.4);
+  }
+</style>
+</head>
+<body>
+
+<!-- Masthead -->
+<div class="masthead">
+  <div class="masthead-logo">
+    <img class="logo-profile" src="profile-photo.jpeg" alt="rubimfx">
+    <span class="logo-name">@rubimfx</span>
+  </div>
+  <span class="masthead-date">16 mar 2026</span>
+</div>
+
+<!-- Hero photo -->
+<div class="hero-photo">
+  <img src="profile-photo.jpeg" alt="Foto da matéria">
+  <div class="hero-category">Banco Central do Brasil</div>
+  <div class="hero-caption">Foto: Banco Central do Brasil</div>
+</div>
+
+<!-- Source bar -->
+<div class="source-bar">
+  <span class="source-name">Banco Central do Brasil</span>
+  <div class="source-sep"></div>
+  <span class="source-byline">Reportagem especial</span>
+  <span class="source-date">16 mar 2026</span>
+</div>
+
+<!-- Editorial body -->
+<div class="editorial-body">
+
+  <div class="accent-rule"></div>
+
+  <div class="article-headline">BC confirma corte da Selic em março e sinaliza continuidade</div>
+
+  <div class="article-deck">Comitê destaca melhora na inflação e redução de riscos externos</div>
+
+  <div class="article-body-text">O Banco Central cortou a taxa Selic em 0,50 ponto percentual, de 15% para 14,5% ao ano. É o primeiro corte desde o ciclo de alta que começou em 2024.</div>
+
+  <!-- Stats row -->
+  <div class="stats-row">
+    <div class="stats-cell">
+      <div class="stats-cell-value">14,5%</div>
+      <div class="stats-cell-label">Nova Selic</div>
+    </div>
+    <div class="stats-cell">
+      <div class="stats-cell-value">-0,50 p.p.</div>
+      <div class="stats-cell-label">Corte</div>
+    </div>
+    <div class="stats-cell">
+      <div class="stats-cell-value">Unânime</div>
+      <div class="stats-cell-label">Decisão</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Footer bar -->
+<div class="footer-bar">
+  <img class="footer-profile" src="profile-photo.jpeg" alt="rubimfx">
+  <span class="footer-text"><strong>@rubimfx</strong> · Análise e contexto</span>
+  <span class="footer-slide">1</span>
+</div>
+
+</body>
+</html>

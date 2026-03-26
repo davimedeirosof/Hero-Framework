@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1080">
+<title>Template 04 — Minimal Clean</title>
+<style>
+  /* =========================================
+     CSS VARIABLES — edite aqui para customizar
+     ========================================= */
+  :root {
+    --bg:            #FFFFFF;
+    --bg-soft:       #F8F9FA;
+    --bg-dark:       #0F1419;
+    --text-headline: #0A0A0A;
+    --text-body:     #2C2C2C;
+    --text-muted:    #767676;
+    --accent:        #1A56DB;
+    --accent-light:  rgba(26, 86, 219, 0.08);
+    --border:        #E5E7EB;
+    --border-strong: #D1D5DB;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    width: 1080px;
+    height: 1350px;
+    background: var(--bg);
+    font-family: -apple-system, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    color: var(--text-headline);
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ── Top bar ── */
+  .top-bar {
+    height: 6px;
+    background: linear-gradient(90deg, var(--accent), #7C3AED);
+    flex-shrink: 0;
+  }
+
+  /* ── Header ── */
+  .header {
+    padding: 36px 64px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+
+  .header-brand {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .profile-pic {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+  }
+
+  .brand-name {
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--text-headline);
+    letter-spacing: -0.3px;
+  }
+
+  .brand-handle {
+    font-size: 22px;
+    color: var(--text-muted);
+    margin-top: 2px;
+  }
+
+  .slide-badge {
+    background: var(--accent-light);
+    border: 1px solid rgba(26,86,219,0.2);
+    border-radius: 100px;
+    padding: 10px 26px;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: 0.5px;
+  }
+
+  /* ── Main content ── */
+  .main-content {
+    flex: 1;
+    padding: 52px 64px 48px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  /* Slide number label */
+  .slide-label {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: 2.2px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+
+  /* Thin accent rule */
+  .accent-rule {
+    width: 48px;
+    height: 3px;
+    background: var(--accent);
+    border-radius: 2px;
+    margin-bottom: 28px;
+  }
+
+  /* Main headline — very large, editorial */
+  .main-headline {
+    font-size: 80px;
+    font-weight: 900;
+    color: var(--text-headline);
+    line-height: 0.98;
+    letter-spacing: -2.5px;
+    margin-bottom: 32px;
+  }
+
+  .main-headline .hl-accent { color: var(--accent); }
+  .main-headline .hl-muted  { color: var(--text-muted); }
+
+  /* Subhead */
+  .subhead {
+    font-size: 40px;
+    font-weight: 600;
+    color: var(--text-body);
+    line-height: 1.3;
+    letter-spacing: -0.4px;
+    margin-bottom: 36px;
+  }
+
+  /* Body text */
+  .body-text {
+    font-size: 30px;
+    color: var(--text-body);
+    line-height: 1.55;
+    flex: 1;
+    margin-bottom: 40px;
+  }
+
+  .body-text strong {
+    font-weight: 700;
+    color: var(--text-headline);
+  }
+
+  /* Callout box */
+  .callout {
+    background: var(--accent-light);
+    border-left: 4px solid var(--accent);
+    border-radius: 0 12px 12px 0;
+    padding: 22px 28px;
+    margin-bottom: 36px;
+    flex-shrink: 0;
+  }
+
+  .callout-text {
+    font-size: 32px;
+    font-weight: 600;
+    color: var(--text-headline);
+    line-height: 1.35;
+  }
+
+  .callout-source {
+    font-size: 22px;
+    color: var(--text-muted);
+    margin-top: 8px;
+  }
+
+  /* Stats inline row */
+  .inline-stats {
+    display: flex;
+    gap: 0;
+    border: 1px solid var(--border-strong);
+    border-radius: 12px;
+    overflow: hidden;
+    flex-shrink: 0;
+    margin-bottom: 32px;
+  }
+
+  .inline-stat {
+    flex: 1;
+    padding: 24px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    border-right: 1px solid var(--border);
+  }
+
+  .inline-stat:last-child { border-right: none; }
+
+  .is-value {
+    font-size: 52px;
+    font-weight: 900;
+    color: var(--accent);
+    letter-spacing: -0.5px;
+  }
+
+  .is-label {
+    font-size: 22px;
+    color: var(--text-muted);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+  }
+
+  /* ── Footer ── */
+  .footer {
+    padding: 24px 64px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+    background: var(--bg-soft);
+  }
+
+  .footer-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .footer-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+
+  .footer-text {
+    font-size: 22px;
+    color: var(--text-muted);
+    font-weight: 500;
+  }
+
+  .footer-date {
+    font-size: 22px;
+    color: var(--text-muted);
+  }
+
+  .footer-slide-num {
+    font-size: 22px;
+    color: var(--text-muted);
+    font-weight: 600;
+  }
+</style>
+</head>
+<body>
+
+<!-- Top accent bar -->
+<div class="top-bar"></div>
+
+<!-- Header -->
+<div class="header">
+  <div class="header-brand">
+    <img class="profile-pic" src="profile-photo.jpeg" alt="rubimfx">
+    <div>
+      <div class="brand-name">@rubimfx</div>
+      <div class="brand-handle">16 mar 2026</div>
+    </div>
+  </div>
+  <div class="slide-badge">URGENTE</div>
+</div>
+
+<!-- Main content -->
+<div class="main-content">
+
+  <div class="slide-label">Banco Central do Brasil</div>
+
+  <div class="accent-rule"></div>
+
+  <div class="main-headline">Copom corta Selic pela primeira vez em 2026</div>
+
+  <div class="subhead">Taxa cai de 15% para 14,5%. Mercado reage.</div>
+
+  <!-- Callout / pull quote -->
+  <div class="callout">
+    <div class="callout-text">O Banco Central cortou a taxa Selic em 0,50 ponto percentual, de 15% para 14,5% ao ano. É o primeiro corte desde o ciclo de alta que começou em 2024.</div>
+    <div class="callout-source">Banco Central do Brasil · 16 mar 2026</div>
+  </div>
+
+  <!-- Inline stats -->
+  <div class="inline-stats">
+    <div class="inline-stat">
+      <div class="is-value">14,5%</div>
+      <div class="is-label">Nova Selic</div>
+    </div>
+    <div class="inline-stat">
+      <div class="is-value">-0,50 p.p.</div>
+      <div class="is-label">Corte</div>
+    </div>
+    <div class="inline-stat">
+      <div class="is-value">Unânime</div>
+      <div class="is-label">Decisão</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Footer -->
+<div class="footer">
+  <div class="footer-left">
+    <div class="footer-dot"></div>
+    <span class="footer-text">@rubimfx · Análise</span>
+  </div>
+  <span class="footer-date">16 mar 2026</span>
+  <span class="footer-slide-num">1</span>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1080">
+<title>Template 05 — Breaking News</title>
+<style>
+  /* =========================================
+     CSS VARIABLES — edite aqui para customizar
+     ========================================= */
+  :root {
+    --bg-primary:    #0D0000;
+    --bg-card:       rgba(180, 0, 0, 0.12);
+    --bg-card-dark:  rgba(255,255,255,0.05);
+    --text-primary:  #FFFFFF;
+    --text-muted:    rgba(255,255,255,0.55);
+    --accent-red:    #E00000;
+    --accent-orange: #FF6600;
+    --accent-yellow: #FFD700;
+    --border-red:    rgba(220,0,0,0.5);
+    --border-dim:    rgba(255,255,255,0.1);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    width: 1080px;
+    height: 1350px;
+    background: var(--bg-primary);
+    font-family: -apple-system, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    color: var(--text-primary);
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Red gradient background overlay */
+  .bg-overlay {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 800px 500px at 50% 0%, rgba(220,0,0,0.35) 0%, transparent 55%),
+      radial-gradient(ellipse 400px 600px at 100% 100%, rgba(180,0,0,0.2) 0%, transparent 60%),
+      linear-gradient(180deg, #1A0000 0%, #0D0000 40%, #080000 100%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Scanlines texture */
+  .scanlines {
+    position: absolute;
+    inset: 0;
+    background-image: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 3px,
+      rgba(0,0,0,0.08) 3px,
+      rgba(0,0,0,0.08) 4px
+    );
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  /* ── Photo hero area ── */
+  .photo-hero {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+  }
+
+  .photo-hero img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 20%;
+    display: block;
+    opacity: 0.3;
+    mix-blend-mode: luminosity;
+  }
+
+  /* Heavy dark overlay over photo */
+  .photo-hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      180deg,
+      rgba(13,0,0,0.65) 0%,
+      rgba(13,0,0,0.45) 30%,
+      rgba(8,0,0,0.75) 65%,
+      rgba(5,0,0,0.97) 100%
+    );
+  }
+
+  /* ── All content above photo ── */
+  .content-layer {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 0;
+  }
+
+  /* ── Top breaking bar ── */
+  .breaking-bar {
+    background: var(--accent-red);
+    padding: 14px 52px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-shrink: 0;
+  }
+
+  .breaking-live {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #FFFFFF;
+    flex-shrink: 0;
+    position: relative;
+  }
+
+  .breaking-live::after {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
+    border: 2px solid rgba(255,255,255,0.4);
+  }
+
+  .breaking-label {
+    font-size: 26px;
+    font-weight: 900;
+    color: #FFFFFF;
+    letter-spacing: 3.5px;
+    text-transform: uppercase;
+  }
+
+  .breaking-ticker {
+    margin-left: auto;
+    font-size: 22px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.85);
+  }
+
+  /* ── Network header ── */
+  .network-header {
+    padding: 22px 52px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-shrink: 0;
+  }
+
+  .network-logo {
+    font-size: 30px;
+    font-weight: 900;
+    letter-spacing: 1px;
+    color: #FFFFFF;
+    background: var(--accent-red);
+    padding: 6px 18px;
+    border-radius: 4px;
+  }
+
+  .network-source {
+    font-size: 24px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.7);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  .network-time {
+    margin-left: auto;
+    font-size: 22px;
+    color: rgba(255,255,255,0.5);
+  }
+
+  /* ── Main content area ── */
+  .main-area {
+    flex: 1;
+    padding: 0 52px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 28px;
+    padding-bottom: 48px;
+  }
+
+  /* Category tag */
+  .category-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border: 2px solid var(--accent-red);
+    border-radius: 4px;
+    padding: 8px 22px;
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--accent-red);
+    letter-spacing: 2.2px;
+    text-transform: uppercase;
+    width: fit-content;
+  }
+
+  /* Main headline — MASSIVE */
+  .main-headline {
+    font-size: 80px;
+    font-weight: 900;
+    color: #FFFFFF;
+    line-height: 0.96;
+    letter-spacing: -2.5px;
+    text-shadow: 0 4px 20px rgba(0,0,0,0.8);
+  }
+
+  .main-headline .hl-red    { color: var(--accent-red); }
+  .main-headline .hl-orange { color: var(--accent-orange); }
+  .main-headline .hl-yellow { color: var(--accent-yellow); }
+
+  /* Sub-headline */
+  .sub-headline {
+    font-size: 38px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.82);
+    line-height: 1.3;
+    max-width: 980px;
+  }
+
+  /* Stats strip */
+  .stats-strip {
+    display: flex;
+    gap: 12px;
+  }
+
+  .stat-box {
+    flex: 1;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 12px;
+    padding: 22px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    backdrop-filter: blur(6px);
+  }
+
+  .stat-box-value {
+    font-size: 52px;
+    font-weight: 900;
+    color: #FFFFFF;
+    letter-spacing: -0.5px;
+  }
+
+  .stat-box-value.red    { color: var(--accent-red); }
+  .stat-box-value.orange { color: var(--accent-orange); }
+  .stat-box-value.yellow { color: var(--accent-yellow); }
+
+  .stat-box-label {
+    font-size: 22px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.5);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  /* ── Bottom ticker bar ── */
+  .ticker-bar {
+    background: rgba(220,0,0,0.9);
+    padding: 14px 52px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-shrink: 0;
+  }
+
+  .ticker-label {
+    font-size: 22px;
+    font-weight: 900;
+    letter-spacing: 2.2px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.75);
+    flex-shrink: 0;
+  }
+
+  .ticker-sep {
+    width: 1px;
+    height: 16px;
+    background: rgba(255,255,255,0.3);
+  }
+
+  .ticker-text {
+    font-size: 24px;
+    font-weight: 600;
+    color: #FFFFFF;
+    flex: 1;
+  }
+
+  .ticker-profile {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .ticker-pic {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1.5px solid rgba(255,255,255,0.3);
+  }
+
+  .ticker-handle {
+    font-size: 22px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.9);
+  }
+</style>
+</head>
+<body>
+
+<!-- Background layers -->
+<div class="bg-overlay"></div>
+<div class="scanlines"></div>
+
+<!-- Photo hero (dimmed, behind content) -->
+<div class="photo-hero">
+  <img src="profile-photo.jpeg" alt="Foto de fundo">
+</div>
+
+<!-- Content layer -->
+<div class="content-layer">
+
+  <!-- Breaking bar -->
+  <div class="breaking-bar">
+    <div class="breaking-live"></div>
+    <span class="breaking-label">Urgente</span>
+    <span class="breaking-ticker">16 mar 2026 · Ao vivo</span>
+  </div>
+
+  <!-- Network header -->
+  <div class="network-header">
+    <span class="network-logo">Banco Central do Brasil</span>
+    <span class="network-source">Cobertura especial</span>
+    <span class="network-time">16 mar 2026</span>
+  </div>
+
+  <!-- Main area -->
+  <div class="main-area">
+
+    <div class="category-tag">URGENTE</div>
+
+    <div class="main-headline">Copom corta Selic pela primeira vez em 2026</div>
+
+    <div class="sub-headline">Taxa cai de 15% para 14,5%. Mercado reage.</div>
+
+    <!-- Stats strip -->
+    <div class="stats-strip">
+      <div class="stat-box">
+        <div class="stat-box-value red">14,5%</div>
+        <div class="stat-box-label">Nova Selic</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-box-value orange">-0,50 p.p.</div>
+        <div class="stat-box-label">Corte</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-box-value yellow">Unânime</div>
+        <div class="stat-box-label">Decisão</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Bottom ticker -->
+  <div class="ticker-bar">
+    <span class="ticker-label">análise</span>
+    <div class="ticker-sep"></div>
+    <span class="ticker-text">O Banco Central cortou a taxa Selic em 0,50 ponto percentual, de 15% para 14,5% ao ano. É o primeiro corte desde o ciclo de alta que começou em 2024.</span>
+    <div class="ticker-profile">
+      <img class="ticker-pic" src="profile-photo.jpeg" alt="rubimfx">
+      <span class="ticker-handle">@rubimfx</span>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>
